@@ -11,7 +11,7 @@
         return [Number(e1), Number(e2)];
     };
 
-    const checkRange = ([a1, b1], [a2, b2]) => a1 <= a2 && a2 <= b2 && b2 <= b1;
+    const checkRange = ([a1, b1], [a2, b2]) => a1 <= a2 && a2 <= b1;
 
     return httpGet("https://adventofcode.com/2022/day/4/input")
         .split("\n")
