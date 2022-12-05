@@ -39,8 +39,13 @@
     };
 
     const move = (stacks, { count, from, to }) => {
+        const buffer = [];
         for (let i = 0; i < count; i++) {
             const e = stacks[from].pop();
+            buffer.push(e);
+        }
+        for (let i = 0; i < count; i++) {
+            const e = buffer.pop();
             stacks[to].push(e);
         }
     };
