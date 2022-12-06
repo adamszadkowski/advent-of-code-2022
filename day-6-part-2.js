@@ -10,8 +10,8 @@
         const marker = [];
         for (let i = 0; i < buffer.length; i++) {
             const l = buffer[i];
-            if (marker.length === 4) {
-                if (new Set(marker).size === 4) {
+            if (marker.length === 14) {
+                if (new Set(marker).size === 14) {
                     return i;
                 } else {
                     marker.shift();
