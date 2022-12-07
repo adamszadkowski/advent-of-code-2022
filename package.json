@@ -1,0 +1,11 @@
+{
+  "name": "advent-of-code-2022",
+  "description": "Solutions to advent of code 2022",
+  "version": "0.1.0",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^29.3.1"
+  }
+}
