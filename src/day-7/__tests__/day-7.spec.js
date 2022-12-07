@@ -24,12 +24,17 @@ $ ls
 dir second-level
 $ cd second-level
 $ ls
-8 other.txt`;
+8 other.txt
+dir third-level
+$ cd third-level
+$ ls
+9 file.txt`;
 
         expect(solution.listFiles(input)).toEqual([
             { path: "/", name: "file.txt", size: 1 },
             { path: "/", name: "second.txt", size: 12 },
-            { path: "/second-level", name: "other.txt", size: 8 },
+            { path: "/second-level/", name: "other.txt", size: 8 },
+            { path: "/second-level/third-level/", name: "file.txt", size: 9 },
         ]);
     });
 });
@@ -42,6 +47,7 @@ class Day7Solution {
         for (const command of commands) {
             if (command.command === "cd") {
                 path = `${path}${command.argument}`;
+                path = path.endsWith("/") ? path : `${path}/`;
             } else {
                 const content = command.output
                     .filter((o) => !o.startsWith("dir"))
