@@ -5,17 +5,6 @@ describe("day 6", () => {
         solution = new Day7Solution();
     });
 
-    it("extracts multiple commands", () => {
-        const input = `$ cd /
-$ ls
-1 file.txt`;
-
-        expect(solution.extractCommands(input)).toEqual([
-            { command: "cd", argument: "/", output: [] },
-            { command: "ls", argument: null, output: ["1 file.txt"] },
-        ]);
-    });
-
     it("list root files", () => {
         const input = `$ cd /
 $ ls
@@ -39,15 +28,18 @@ $ ls
         expect(solution.listFiles(input)).toEqual(
             {
                 path: "/",
+                size: 34,
                 files: [
                     { name: "file.txt", size: 1 },
                     { name: "second.txt", size: 12 },
                     {
                         path: "/second-level/",
+                        size: 17,
                         files: [
                             { name: "other.txt", size: 8 },
                             {
                                 path: "/second-level/third-level/",
+                                size: 9,
                                 files: [
                                     { name: "file.txt", size: 9 },
                                 ],
@@ -56,12 +48,12 @@ $ ls
                     },
                     {
                         path: "/other-dir/",
+                        size: 4,
                         files: [
                             { name: "next.txt", size: 4 },
                         ]
                     },
                 ],
-
             },
         );
     });
@@ -101,7 +93,8 @@ class Day7Solution {
 
         const mapNode = (n) => {
             const mapped = n.childs.map((c) => mapNode(c));
-            const result = { path: n.path, files: [...n.files, ...mapped] };
+            const files = [...n.files, ...mapped];
+            const result = { path: n.path, files, size: files.reduce((acc, f) => acc + f.size, 0) };
             return result;
         };
 
