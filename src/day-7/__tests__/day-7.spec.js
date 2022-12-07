@@ -20,11 +20,16 @@ $ ls
         const input = `$ cd /
 $ ls
 1 file.txt
-12 second.txt`;
+12 second.txt
+dir second-level
+$ cd second-level
+$ ls
+8 other.txt`;
 
         expect(solution.listFiles(input)).toEqual([
             { path: "/", name: "file.txt", size: 1 },
             { path: "/", name: "second.txt", size: 12 },
+            { path: "/second-level", name: "other.txt", size: 8 },
         ]);
     });
 });
@@ -32,16 +37,18 @@ $ ls
 class Day7Solution {
     listFiles(input) {
         const commands = this.extractCommands(input);
-        let path;
+        let path = "";
         let files = [];
         for (const command of commands) {
             if (command.command === "cd") {
-                path = command.argument;
+                path = `${path}${command.argument}`;
             } else {
-                const content = command.output.map((o) => {
-                    const [size, name] = o.split(" ");
-                    return { path, size: Number(size), name };
-                });
+                const content = command.output
+                    .filter((o) => !o.startsWith("dir"))
+                    .map((o) => {
+                        const [size, name] = o.split(" ");
+                        return { path, size: Number(size), name };
+                    });
                 files.push(...content);
             }
         }
