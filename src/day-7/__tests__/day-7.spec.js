@@ -36,41 +36,76 @@ $ cd other-dir
 $ ls
 4 next.txt`;
 
-        expect(solution.listFiles(input)).toEqual([
-            { path: "/", name: "file.txt", size: 1 },
-            { path: "/", name: "second.txt", size: 12 },
-            { path: "/second-level/", name: "other.txt", size: 8 },
-            { path: "/second-level/third-level/", name: "file.txt", size: 9 },
-            { path: "/other-dir/", name: "next.txt", size: 4 },
-        ]);
+        expect(solution.listFiles(input)).toEqual(
+            {
+                path: "/",
+                files: [
+                    { name: "file.txt", size: 1 },
+                    { name: "second.txt", size: 12 },
+                    {
+                        path: "/second-level/",
+                        files: [
+                            { name: "other.txt", size: 8 },
+                            {
+                                path: "/second-level/third-level/",
+                                files: [
+                                    { name: "file.txt", size: 9 },
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        path: "/other-dir/",
+                        files: [
+                            { name: "next.txt", size: 4 },
+                        ]
+                    },
+                ],
+
+            },
+        );
     });
 });
 
 class Day7Solution {
     listFiles(input) {
-        const commands = this.extractCommands(input);
-        let path = "";
-        let files = [];
+        const [, ...commands] = this.extractCommands(input);
+        const root = { parent: null, path: "/", childs: [] };
+        let current = root;
         for (const command of commands) {
             if (command.command === "cd") {
                 if (command.argument === "..") {
-                    const endIndex = path.lastIndexOf("/", -1);
-                    path = path.slice(0, endIndex);
+                    current = current.parent;
                 } else {
-                    path = `${path}${command.argument}`;
+                    let path = `${current.path}${command.argument}`;
+                    path = path.endsWith("/") ? path : `${path}/`;
+                    const existingChild = current.childs.find((e) => e.path === path);
+                    if (!existingChild) {
+                        const newChild = { parent: current, path: path, childs: [] };
+                        current.childs.push(newChild);
+                        current = newChild;
+                    } else {
+                        current = existingChild;
+                    }
                 }
-                path = path.endsWith("/") ? path : `${path}/`;
             } else {
                 const content = command.output
                     .filter((o) => !o.startsWith("dir"))
                     .map((o) => {
                         const [size, name] = o.split(" ");
-                        return { path, size: Number(size), name };
+                        return { size: Number(size), name };
                     });
-                files.push(...content);
+                current.files = content;
             }
         }
-        return files;
+
+        const mapNode = (n) => {
+            const mapped = n.childs.map((c) => mapNode(c));
+            const result = { path: n.path, files: [...n.files, ...mapped] };
+            return result;
+        };
+
+        return mapNode(root);
     }
 
     extractCommands(input) {
