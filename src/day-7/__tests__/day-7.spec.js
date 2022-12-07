@@ -5,23 +5,6 @@ describe("day 6", () => {
         solution = new Day7Solution();
     });
 
-    it("extracts single command without output", () => {
-        const input = "cd /";
-
-        expect(solution.extractCommand(input)).toEqual(
-            { command: "cd", argument: "/", output: [] },
-        );
-    });
-
-    it("extracts single command with output", () => {
-        const input = `ls
-1 file.txt`;
-
-        expect(solution.extractCommand(input)).toEqual(
-            { command: "ls", argument: null, output: ["1 file.txt"] },
-        );
-    });
-
     it("extracts multiple commands", () => {
         const input = `$ cd /
 $ ls
@@ -32,9 +15,39 @@ $ ls
             { command: "ls", argument: null, output: ["1 file.txt"] },
         ]);
     });
+
+    it("list root files", () => {
+        const input = `$ cd /
+$ ls
+1 file.txt
+12 second.txt`;
+
+        expect(solution.listFiles(input)).toEqual([
+            { path: "/", name: "file.txt", size: 1 },
+            { path: "/", name: "second.txt", size: 12 },
+        ]);
+    });
 });
 
 class Day7Solution {
+    listFiles(input) {
+        const commands = this.extractCommands(input);
+        let path;
+        let files = [];
+        for (const command of commands) {
+            if (command.command === "cd") {
+                path = command.argument;
+            } else {
+                const content = command.output.map((o) => {
+                    const [size, name] = o.split(" ");
+                    return { path, size: Number(size), name };
+                });
+                files.push(...content);
+            }
+        }
+        return files;
+    }
+
     extractCommands(input) {
         const [, ...commands] = input.split("$ ");
 
