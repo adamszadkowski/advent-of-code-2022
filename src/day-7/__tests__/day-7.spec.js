@@ -8,58 +8,49 @@ describe("day 6", () => {
     it("list root files", () => {
         const input = `$ cd /
 $ ls
-1 file.txt
-12 second.txt
-dir second-level
-dir other-dir
-$ cd second-level
+dir a
+14848514 b.txt
+8504156 c.dat
+dir d
+$ cd a
 $ ls
-8 other.txt
-dir third-level
-$ cd third-level
+dir e
+29116 f
+2557 g
+62596 h.lst
+$ cd e
 $ ls
-9 file.txt
+584 i
 $ cd ..
 $ cd ..
-$ cd other-dir
+$ cd d
 $ ls
-4 next.txt`;
+4060174 j
+8033020 d.log
+5626152 d.ext
+7214296 k`;
 
-        expect(solution.listFiles(input)).toEqual(
-            {
-                path: "/",
-                size: 34,
-                files: [
-                    { name: "file.txt", size: 1 },
-                    { name: "second.txt", size: 12 },
-                    {
-                        path: "/second-level/",
-                        size: 17,
-                        files: [
-                            { name: "other.txt", size: 8 },
-                            {
-                                path: "/second-level/third-level/",
-                                size: 9,
-                                files: [
-                                    { name: "file.txt", size: 9 },
-                                ],
-                            },
-                        ],
-                    },
-                    {
-                        path: "/other-dir/",
-                        size: 4,
-                        files: [
-                            { name: "next.txt", size: 4 },
-                        ]
-                    },
-                ],
-            },
-        );
+        expect(solution.findDirectories(input)).toEqual(95437);
     });
 });
 
 class Day7Solution {
+    findDirectories(input) {
+        const node = this.listFiles(input);
+
+        let queue = [node];
+
+        const nodes = [];
+
+        while (queue.length > 0) {
+            const current = queue.shift();
+            if (current.files) queue.push(...current.files);
+            if (current.files && current.size <= 100000) nodes.push(current.size);
+        }
+
+        return nodes.reduce((acc, c) => acc + c, 0);
+    }
+
     listFiles(input) {
         const [, ...commands] = this.extractCommands(input);
         const root = { parent: null, path: "/", childs: [] };
