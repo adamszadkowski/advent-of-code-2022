@@ -1,0 +1,19 @@
+{
+    "extends": [
+        "eslint:recommended"
+    ],
+    "globals": {},
+    "parser": "@babel/eslint-parser",
+    "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module"
+    },
+    "ignorePatterns": [
+        "node_modules/",
+        "day-3",
+        "day-4",
+        "day-5",
+        "day-6"
+    ],
+    "rules": {}
+}

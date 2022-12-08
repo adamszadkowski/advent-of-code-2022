@@ -27,8 +27,7 @@ export const findTrees = (input) => {
             const column = elements.map(r => r[j]);
             const current = row[j];
 
-            if (i === 0 || j === 0 || i === (elements.length - 1) || j === (row.length - 1)) {
-            } else {
+            if (!(i === 0 || j === 0 || i === (elements.length - 1) || j === (row.length - 1))) {
                 const left = until(row.slice(0, j).reverse(), e => e >= current);
                 const right = until(row.slice(j + 1, row.length), e => e >= current);
                 const top = until(column.slice(0, i).reverse(), e => e >= current);

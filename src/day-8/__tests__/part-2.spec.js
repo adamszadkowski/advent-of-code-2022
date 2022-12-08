@@ -1,4 +1,5 @@
 import { findTrees } from "@/day-8/part-2";
+import { describe, it, expect } from "@jest/core";
 
 describe("day 8", () => {
     it("sample data", () => {

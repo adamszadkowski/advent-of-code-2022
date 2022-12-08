@@ -73,4 +73,4 @@ export class Day7Solution {
 
         return { command: command, argument: argument || null, output: output };
     }
-};
+}

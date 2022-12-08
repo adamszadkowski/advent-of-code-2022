@@ -1,4 +1,5 @@
 import { findTrees } from "@/day-8/part-1";
+import { describe, it, expect } from "@jest/core";
 
 describe("day 8", () => {
     it("epmty has 0 trees visible", () => {
