@@ -1,12 +1,17 @@
-{
-    "extends": [
-        "eslint:recommended"
-    ],
-    "globals": {},
+module.exports = {
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": "eslint:recommended",
     "parser": "@babel/eslint-parser",
+    "overrides": [
+    ],
     "parserOptions": {
-        "ecmaVersion": 2020,
+        "ecmaVersion": "latest",
         "sourceType": "module"
+    },
+    "rules": {
     },
     "ignorePatterns": [
         "node_modules/",
@@ -15,5 +20,4 @@
         "day-5",
         "day-6"
     ],
-    "rules": {}
 }
