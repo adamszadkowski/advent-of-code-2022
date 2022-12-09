@@ -42,4 +42,12 @@ describe("day 9", () => {
             { x: 0, y: 0 },
         ]);
     });
+
+    test("track tail moves", () => {
+        const input = `U 2`.replace(/\n +/g, "\n");
+        expect(solver.move(input).tail).toEqual([
+            { x: 0, y: 0 },
+            { x: 1, y: 0 },
+        ]);
+    });
 });

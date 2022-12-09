@@ -2,11 +2,18 @@ export class Day9Solution {
     move(input) {
         const moves = this.decode(input);
         const head = new Point(0, 0);
+        const tail = new Point(0, 0);
         const headHistory = [head];
+        const tailHistory = [tail];
         moves.forEach(m => {
-            headHistory.push(head.move(m));
+            const lastHead = headHistory.at(-1);
+            const lastTail = tailHistory.at(-1);
+            if (!lastHead.equals(lastTail)) {
+                tailHistory.push(lastTail.move(m));
+            }
+            headHistory.push(lastHead.move(m));
         });
-        return { head: headHistory };
+        return { head: headHistory, tail: tailHistory };
     }
 
     decode(input) {
@@ -29,10 +36,14 @@ class Point {
 
     move(direction) {
         switch (direction) {
-            case "U": return { x: this.x += 1, y: this.y };
-            case "D": return { x: this.x -= 1, y: this.y };
-            case "L": return { x: this.x, y: this.y -= 1 };
-            case "R": return { x: this.x, y: this.y += 1 };
+            case "U": return new Point(this.x + 1, this.y);
+            case "D": return new Point(this.x - 1, this.y);
+            case "L": return new Point(this.x, this.y - 1);
+            case "R": return new Point(this.x, this.y + 1);
         }
+    }
+
+    equals(point) {
+        return point.x === this.x && point.y === this.y;
     }
 }
