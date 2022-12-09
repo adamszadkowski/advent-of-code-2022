@@ -1,5 +1,5 @@
 import { findTrees } from "@/day-8/part-2";
-import { describe, it, expect } from "@jest/core";
+import { describe, it, expect } from "@jest/globals";
 
 describe("day 8", () => {
     it("sample data", () => {

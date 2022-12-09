@@ -1,5 +1,5 @@
 import { Day7Solution } from "@/day-7/part-1";
-import { describe, beforeEach, it, expect } from "@jest/core";
+import { describe, beforeEach, it, expect } from "@jest/globals";
 
 describe("day 7", () => {
     let solution;
