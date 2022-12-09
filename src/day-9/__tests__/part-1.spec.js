@@ -50,4 +50,13 @@ describe("day 9", () => {
             { x: 1, y: 0 },
         ]);
     });
+
+    test("hide tail under head", () => {
+        const input = `U 1
+                       D 2
+                       U 1`.replace(/\n +/g, "\n");
+        expect(solver.move(input).tail).toEqual([
+            { x: 0, y: 0 },
+        ]);
+    });
 });

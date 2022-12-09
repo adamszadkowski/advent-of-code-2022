@@ -5,13 +5,17 @@ export class Day9Solution {
         const tail = new Point(0, 0);
         const headHistory = [head];
         const tailHistory = [tail];
+
         moves.forEach(m => {
             const lastHead = headHistory.at(-1);
+            const nextHead = lastHead.move(m);
             const lastTail = tailHistory.at(-1);
             if (!lastHead.equals(lastTail)) {
-                tailHistory.push(lastTail.move(m));
+                if (!lastTail.equals(nextHead)) {
+                    tailHistory.push(lastHead);
+                }
             }
-            headHistory.push(lastHead.move(m));
+            headHistory.push(nextHead);
         });
         return { head: headHistory, tail: tailHistory };
     }
