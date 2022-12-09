@@ -12,22 +12,15 @@ export class Day9Solution {
 
     move(input) {
         const moves = this.decode(input);
-        const head = new Point(0, 0);
-        const tail = new Point(0, 0);
-        const headHistory = [head];
-        const tailHistory = [tail];
+        const headHistory = [new Point(0, 0)];
+        const tailHistory = [new Point(0, 0)];
 
         moves.forEach(m => {
             const lastHead = headHistory.at(-1);
             const nextHead = lastHead.move(m);
             const lastTail = tailHistory.at(-1);
-            if (!lastHead.equals(lastTail)) {
-                if (!lastTail.equals(nextHead)) {
-                    if (!lastTail.corners(nextHead) && !lastTail.touches(nextHead)) {
-                        tailHistory.push(lastHead);
-                    }
-                }
-            }
+            const canMoveTail = !(lastTail.equals(lastHead) || lastTail.equals(nextHead) || lastTail.corners(nextHead) || lastTail.touches(nextHead));
+            canMoveTail && tailHistory.push(lastHead);
             headHistory.push(nextHead);
         });
         return { head: headHistory, tail: tailHistory };
