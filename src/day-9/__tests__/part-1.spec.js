@@ -19,4 +19,13 @@ describe("day 9", () => {
             expect(solver.decode(input)).toEqual(result);
         });
     });
+
+    test("decode moves", () => {
+        const input = `U 1
+                       D 2
+                       L 1
+                       R 3`.replace(/\n +/g, "\n");
+
+        expect(solver.decode(input)).toEqual(["U", "D", "D", "L", "R", "R", "R"]);
+    });
 });
