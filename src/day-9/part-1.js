@@ -1,4 +1,9 @@
 export class Day9Solution {
+    solve() {
+        const input = this.httpGet("https://adventofcode.com/2022/day/9/input");
+        return this.countDistinctTailMoves(input);
+    }
+
     countDistinctTailMoves(input) {
         const moves = this.move(input).tail;
 
@@ -37,6 +42,13 @@ export class Day9Solution {
                 while (count--) { result.push(direction); }
             });
         return result;
+    }
+
+    httpGet(url) {
+        var r = new XMLHttpRequest();
+        r.open("GET", url, false);
+        r.send(null);
+        return r.responseText;
     }
 }
 
