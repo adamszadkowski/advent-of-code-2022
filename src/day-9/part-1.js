@@ -12,7 +12,9 @@ export class Day9Solution {
             const lastTail = tailHistory.at(-1);
             if (!lastHead.equals(lastTail)) {
                 if (!lastTail.equals(nextHead)) {
-                    tailHistory.push(lastHead);
+                    if (!headHistory.at(-2).corners(nextHead)) {
+                        tailHistory.push(lastHead);
+                    }
                 }
             }
             headHistory.push(nextHead);
@@ -49,5 +51,12 @@ class Point {
 
     equals(point) {
         return point.x === this.x && point.y === this.y;
+    }
+
+    corners(point) {
+        return (this.x === point.x + 1 && this.y === point.y + 1) ||
+            (this.x === point.x - 1 && this.y === point.y + 1) ||
+            (this.x === point.x + 1 && this.y === point.y - 1) ||
+            (this.x === point.x - 1 && this.y === point.y - 1);
     }
 }

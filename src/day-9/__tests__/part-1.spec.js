@@ -59,4 +59,22 @@ describe("day 9", () => {
             { x: 0, y: 0 },
         ]);
     });
+
+    test("move tail on corners", () => {
+        const input = `R 1
+                       U 2`.replace(/\n +/g, "\n");
+        expect(solver.move(input).tail).toEqual([
+            { x: 0, y: 0 },
+            { x: 1, y: 1 },
+        ]);
+    });
+
+    test("move tail on corners with get back", () => {
+        const input = `R 1
+                       U 1
+                       L 1`.replace(/\n +/g, "\n");
+        expect(solver.move(input).tail).toEqual([
+            { x: 0, y: 0 },
+        ]);
+    });
 });
