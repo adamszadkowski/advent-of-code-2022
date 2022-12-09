@@ -12,7 +12,7 @@ export class Day9Solution {
             const lastTail = tailHistory.at(-1);
             if (!lastHead.equals(lastTail)) {
                 if (!lastTail.equals(nextHead)) {
-                    if (!headHistory.at(-2).corners(nextHead)) {
+                    if (!lastTail.corners(nextHead) && !lastTail.touches(nextHead)) {
                         tailHistory.push(lastHead);
                     }
                 }
@@ -58,5 +58,12 @@ class Point {
             (this.x === point.x - 1 && this.y === point.y + 1) ||
             (this.x === point.x + 1 && this.y === point.y - 1) ||
             (this.x === point.x - 1 && this.y === point.y - 1);
+    }
+
+    touches(point) {
+        return (this.x === point.x && this.y === point.y + 1) ||
+            (this.x === point.x && this.y === point.y - 1) ||
+            (this.x === point.x + 1 && this.y === point.y) ||
+            (this.x === point.x - 1 && this.y === point.y);
     }
 }
