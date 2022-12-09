@@ -87,4 +87,16 @@ describe("day 9", () => {
             { x: 1, y: 1 },
         ]);
     });
+
+    test("count distinct moves", () => {
+        const input = `R 4
+                       U 4
+                       L 3
+                       D 1
+                       R 4
+                       D 1
+                       L 5
+                       R 2`.replace(/\n +/g, "\n");
+        expect(solver.countDistinctTailMoves(input)).toEqual(13);
+    });
 });

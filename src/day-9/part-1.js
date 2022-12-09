@@ -1,4 +1,10 @@
 export class Day9Solution {
+    countDistinctTailMoves(input) {
+        const moves = this.move(input).tail;
+
+        return [...new Set(moves.map(({ x, y }) => `${x}:${y}`))].length;
+    }
+
     move(input) {
         const moves = this.decode(input);
         const head = new Point(0, 0);
