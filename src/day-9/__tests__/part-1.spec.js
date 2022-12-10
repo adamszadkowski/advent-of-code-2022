@@ -33,6 +33,15 @@ describe("day 9", () => {
                  ...H.
                  .....`.replace(/ +/g, ""));
         });
+
+        test("four points", () => {
+            const moves = [{ x: 1, y: -1 }, { x: 1, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 1 }];
+
+            expect(visualizer.visualize(moves)).toEqual(
+                `...2T
+                 ...1.
+                 ...H.`.replace(/ +/g, ""));
+        });
     });
 
     describe("part 1", () => {
@@ -145,8 +154,14 @@ class Visualizer {
     visualize(input) {
         const matrix = this.createMatrix();
 
+        const getName = (i) => {
+            if (i === 0) return "H";
+            else if (i === input.length - 1) return "T";
+            else return i.toString();
+        };
+
         input.forEach(({ x, y }, index) => {
-            matrix[y + this.center.y][x + this.center.x] = index === 0 ? "H" : "T";
+            matrix[y + this.center.y][x + this.center.x] = getName(index);
         });
 
         return matrix
