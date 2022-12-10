@@ -56,23 +56,23 @@ describe("day 9", () => {
 
         test("decode moves", () => {
             const input = `U 1
-                       D 2
-                       L 1
-                       R 3`.replace(/\n +/g, "\n");
+                           D 2
+                           L 1
+                           R 3`.replace(/\n +/g, "\n");
 
             expect(solver.decode(input)).toEqual(["U", "D", "D", "L", "R", "R", "R"]);
         });
 
         test("track head moves", () => {
             const input = `U 1
-                       L 1
-                       D 1
-                       R 1`.replace(/\n +/g, "\n");
+                           L 1
+                           D 1
+                           R 1`.replace(/\n +/g, "\n");
             expect(solver.move(input).head).toEqual([
                 { x: 0, y: 0 },
-                { x: 1, y: 0 },
-                { x: 1, y: -1 },
-                { x: 0, y: -1 },
+                { x: 0, y: 1 },
+                { x: -1, y: 1 },
+                { x: -1, y: 0 },
                 { x: 0, y: 0 },
             ]);
         });
@@ -81,14 +81,14 @@ describe("day 9", () => {
             const input = `U 2`.replace(/\n +/g, "\n");
             expect(solver.move(input).tail).toEqual([
                 { x: 0, y: 0 },
-                { x: 1, y: 0 },
+                { x: 0, y: 1 },
             ]);
         });
 
         test("hide tail under head", () => {
             const input = `U 1
-                       D 2
-                       U 1`.replace(/\n +/g, "\n");
+                           D 2
+                           U 1`.replace(/\n +/g, "\n");
             expect(solver.move(input).tail).toEqual([
                 { x: 0, y: 0 },
             ]);
@@ -96,7 +96,7 @@ describe("day 9", () => {
 
         test("move tail on corners", () => {
             const input = `R 1
-                       U 2`.replace(/\n +/g, "\n");
+                           U 2`.replace(/\n +/g, "\n");
             expect(solver.move(input).tail).toEqual([
                 { x: 0, y: 0 },
                 { x: 1, y: 1 },
@@ -105,8 +105,8 @@ describe("day 9", () => {
 
         test("move tail on corners with get back", () => {
             const input = `R 1
-                       U 1
-                       L 1`.replace(/\n +/g, "\n");
+                           U 1
+                           L 1`.replace(/\n +/g, "\n");
             expect(solver.move(input).tail).toEqual([
                 { x: 0, y: 0 },
             ]);
@@ -114,8 +114,8 @@ describe("day 9", () => {
 
         test("move tail on two corners", () => {
             const input = `R 1
-                       U 1
-                       R 1`.replace(/\n +/g, "\n");
+                           U 1
+                           R 1`.replace(/\n +/g, "\n");
             expect(solver.move(input).tail).toEqual([
                 { x: 0, y: 0 },
                 { x: 1, y: 1 },
@@ -124,13 +124,13 @@ describe("day 9", () => {
 
         test("count distinct moves", () => {
             const input = `R 4
-                       U 4
-                       L 3
-                       D 1
-                       R 4
-                       D 1
-                       L 5
-                       R 2`.replace(/\n +/g, "\n");
+                           U 4
+                           L 3
+                           D 1
+                           R 4
+                           D 1
+                           L 5
+                           R 2`.replace(/\n +/g, "\n");
             expect(solver.countDistinctTailMoves(input)).toEqual(13);
         });
     });

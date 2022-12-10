@@ -53,10 +53,10 @@ class Point {
 
     move(direction) {
         switch (direction) {
-            case "U": return new Point(this.x + 1, this.y);
-            case "D": return new Point(this.x - 1, this.y);
-            case "L": return new Point(this.x, this.y - 1);
-            case "R": return new Point(this.x, this.y + 1);
+            case "U": return new Point(this.x, this.y + 1);
+            case "D": return new Point(this.x, this.y - 1);
+            case "L": return new Point(this.x - 1, this.y);
+            case "R": return new Point(this.x + 1, this.y);
         }
     }
 
