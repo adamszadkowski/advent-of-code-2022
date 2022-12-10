@@ -15,6 +15,15 @@ describe("day 9", () => {
                  ...
                  ...`.replace(/ +/g, ""));
         });
+
+        test("single point", () => {
+            const moves = [{ x: 0, y: 0 }];
+
+            expect(visualizer.visualize(moves)).toEqual(
+                `...
+                 .H.
+                 ...`.replace(/ +/g, ""));
+        });
     });
 
     describe("part 1", () => {
@@ -124,8 +133,14 @@ class Visualizer {
         this.center = center;
     }
 
-    visualize() {
-        return this.createMatrix()
+    visualize(input) {
+        const matrix = this.createMatrix();
+
+        input.forEach(({ x, y }) => {
+            matrix[x + this.center.x][y + this.center.y] = "H";
+        });
+
+        return matrix
             .map((r) => r.join(""))
             .join("\n");
     }
