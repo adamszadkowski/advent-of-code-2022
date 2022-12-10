@@ -20,7 +20,7 @@ export class Day9Solution {
             const nextHead = lastHead.move(m);
             const lastTail = tailHistory.at(-1);
             const canMoveTail = !(lastTail.equals(lastHead) || lastTail.equals(nextHead) || lastTail.corners(nextHead) || lastTail.touches(nextHead));
-            canMoveTail && tailHistory.push(lastHead);
+            tailHistory.push(canMoveTail && lastHead || lastTail);
             headHistory.push(nextHead);
         });
         return { head: headHistory, tail: tailHistory };

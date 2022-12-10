@@ -99,6 +99,7 @@ describe("day 9", () => {
             const input = `U 2`.replace(/\n +/g, "\n");
             expect(solver.move(input).tail).toEqual([
                 { x: 0, y: 0 },
+                { x: 0, y: 0 },
                 { x: 0, y: 1 },
             ]);
         });
@@ -109,6 +110,10 @@ describe("day 9", () => {
                            U 1`.replace(/\n +/g, "\n");
             expect(solver.move(input).tail).toEqual([
                 { x: 0, y: 0 },
+                { x: 0, y: 0 },
+                { x: 0, y: 0 },
+                { x: 0, y: 0 },
+                { x: 0, y: 0 },
             ]);
         });
 
@@ -116,6 +121,8 @@ describe("day 9", () => {
             const input = `R 1
                            U 2`.replace(/\n +/g, "\n");
             expect(solver.move(input).tail).toEqual([
+                { x: 0, y: 0 },
+                { x: 0, y: 0 },
                 { x: 0, y: 0 },
                 { x: 1, y: 1 },
             ]);
@@ -127,6 +134,9 @@ describe("day 9", () => {
                            L 1`.replace(/\n +/g, "\n");
             expect(solver.move(input).tail).toEqual([
                 { x: 0, y: 0 },
+                { x: 0, y: 0 },
+                { x: 0, y: 0 },
+                { x: 0, y: 0 },
             ]);
         });
 
@@ -135,6 +145,8 @@ describe("day 9", () => {
                            U 1
                            R 1`.replace(/\n +/g, "\n");
             expect(solver.move(input).tail).toEqual([
+                { x: 0, y: 0 },
+                { x: 0, y: 0 },
                 { x: 0, y: 0 },
                 { x: 1, y: 1 },
             ]);
