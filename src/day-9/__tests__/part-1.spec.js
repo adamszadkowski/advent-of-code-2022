@@ -24,6 +24,15 @@ describe("day 9", () => {
                  .H.
                  ...`.replace(/ +/g, ""));
         });
+
+        test("two points", () => {
+            const moves = [{ x: 0, y: 0 }, { x: 1, y: 1 }];
+
+            expect(visualizer.visualize(moves)).toEqual(
+                `..T
+                 .H.
+                 ...`.replace(/ +/g, ""));
+        });
     });
 
     describe("part 1", () => {
@@ -136,11 +145,12 @@ class Visualizer {
     visualize(input) {
         const matrix = this.createMatrix();
 
-        input.forEach(({ x, y }) => {
-            matrix[x + this.center.x][y + this.center.y] = "H";
+        input.forEach(({ x, y }, index) => {
+            matrix[x + this.center.x][y + this.center.y] = index === 0 ? "H" : "T";
         });
 
         return matrix
+            .reverse()
             .map((r) => r.join(""))
             .join("\n");
     }
