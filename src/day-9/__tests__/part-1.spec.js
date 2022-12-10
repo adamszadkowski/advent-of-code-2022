@@ -2,6 +2,21 @@ import { describe, beforeEach, test, expect } from "@jest/globals";
 import { Day9Solution } from "@/day-9/part-1";
 
 describe("day 9", () => {
+    let visualizer;
+
+    describe("moves visualisation", () => {
+        beforeEach(() => {
+            visualizer = new Visualizer({ x: 3, y: 3 }, { x: 1, y: 1 });
+        });
+
+        test("empty result", () => {
+            expect(visualizer.visualize([])).toEqual(
+                `...
+                 ...
+                 ...`.replace(/ +/g, ""));
+        });
+    });
+
     describe("part 1", () => {
         let solver;
 
@@ -102,3 +117,26 @@ describe("day 9", () => {
         });
     });
 });
+
+class Visualizer {
+    constructor(size, center) {
+        this.size = size;
+        this.center = center;
+    }
+
+    visualize() {
+        return this.createMatrix()
+            .map((r) => r.join(""))
+            .join("\n");
+    }
+
+    createMatrix() {
+        const matrix = [];
+        for (let x = 0; x < this.size.x; x++) {
+            const row = [];
+            for (let y = 0; y < this.size.y; y++) row.push(".");
+            matrix.push(row);
+        }
+        return matrix;
+    }
+}
