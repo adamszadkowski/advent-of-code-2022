@@ -21,15 +21,16 @@ export class Day9Solution {
         moves.forEach(m => {
             let [lastTop, ...last] = history.at(-1);
             let nextTop = lastTop.move(m);
-
             const nexts = [nextTop];
-            last.forEach(lastBottom => {
+
+            while (nexts.length < this.size) {
+                const lastBottom = last.shift();
                 const canMoveBottom = !(lastBottom.equals(lastTop) || lastBottom.equals(nextTop) || lastBottom.corners(nextTop) || lastBottom.touches(nextTop));
                 const nextBottom = canMoveBottom && lastTop || lastBottom;
                 nextTop = nextBottom;
                 lastTop = lastBottom;
                 nexts.push(nextBottom);
-            });
+            }
 
             history.push(nexts);
         });
