@@ -42,6 +42,15 @@ describe("day 9", () => {
                  ..s1.
                  ...H.`.replace(/ +/g, ""));
         });
+
+        test("put head tags on top", () => {
+            const moves = [{ x: 1, y: -1 }, { x: 1, y: -1 }, { x: 0, y: -1 }, { x: 0, y: -1 }, { x: 0, y: -1 }];
+
+            expect(visualizer.visualize(moves)).toEqual(
+                `.....
+                 ..s..
+                 ..2H.`.replace(/ +/g, ""));
+        });
     });
 
     describe("part 1", () => {
@@ -161,7 +170,13 @@ class Visualizer {
         };
 
         input.forEach(({ x, y }, index) => {
-            matrix[y + this.center.y][x + this.center.x] = getName(index);
+            const existing = matrix[y + this.center.y][x + this.center.x];
+            const existingNumber = Number(existing);
+            const isEmpty = existing === ".";
+            const isStarting = existing === "s";
+            const isTail = existing === "T";
+            const isHigher = Number.isFinite(existingNumber) && Number(existing) > Number(getName(index));
+            if (isEmpty || isStarting || isTail || isHigher) matrix[y + this.center.y][x + this.center.x] = getName(index);
         });
 
         return matrix
