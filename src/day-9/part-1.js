@@ -1,4 +1,8 @@
 export class Day9Solution {
+    constructor(size = 2) {
+        this.size = size;
+    }
+
     solve() {
         const input = this.httpGet("https://adventofcode.com/2022/day/9/input");
         return this.countDistinctTailMoves(input);
@@ -12,17 +16,24 @@ export class Day9Solution {
 
     move(input) {
         const moves = this.decode(input);
-        const history = [[new Point(0, 0), new Point(0, 0)]];
+        const history = [Array(this.size).fill(new Point(0, 0))];
 
         moves.forEach(m => {
-            const last = history.at(-1);
-            const lastHead = last.at(0);
-            const nextHead = lastHead.move(m);
-            const lastTail = last.at(-1);
-            const canMoveTail = !(lastTail.equals(lastHead) || lastTail.equals(nextHead) || lastTail.corners(nextHead) || lastTail.touches(nextHead));
-            const nextTail = canMoveTail && lastHead || lastTail;
-            history.push([nextHead, nextTail])
+            let [lastTop, ...last] = history.at(-1);
+            let nextTop = lastTop.move(m);
+
+            const nexts = [nextTop];
+            last.forEach(lastBottom => {
+                const canMoveBottom = !(lastBottom.equals(lastTop) || lastBottom.equals(nextTop) || lastBottom.corners(nextTop) || lastBottom.touches(nextTop));
+                const nextBottom = canMoveBottom && lastTop || lastBottom;
+                nextTop = nextBottom;
+                lastTop = lastBottom;
+                nexts.push(nextBottom);
+            });
+
+            history.push(nexts);
         });
+
         return history;
     }
 
