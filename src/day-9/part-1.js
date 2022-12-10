@@ -24,12 +24,16 @@ export class Day9Solution {
             const nexts = [nextTop];
 
             while (nexts.length < this.size) {
-                const lastBottom = last.shift();
-                const canMoveBottom = !(lastBottom.equals(lastTop) || lastBottom.equals(nextTop) || lastBottom.corners(nextTop) || lastBottom.touches(nextTop));
-                const nextBottom = canMoveBottom && lastTop || lastBottom;
+                let lastBottom = last.shift();
+                let nextBottom = lastBottom;
+                if (!lastBottom.around(nextTop)) {
+                    const d = lastBottom.delta(nextTop);
+                    nextBottom = new Point(lastBottom.x - Math.sign(d.x), lastBottom.y - Math.sign(d.y));
+                }
+
+                nexts.push(nextBottom);
                 nextTop = nextBottom;
                 lastTop = lastBottom;
-                nexts.push(nextBottom);
             }
 
             history.push(nexts);
@@ -63,30 +67,23 @@ class Point {
         this.y = y;
     }
 
-    move(direction) {
-        switch (direction) {
-            case "U": return new Point(this.x, this.y + 1);
-            case "D": return new Point(this.x, this.y - 1);
-            case "L": return new Point(this.x - 1, this.y);
-            case "R": return new Point(this.x + 1, this.y);
-        }
+    move(...directions) {
+        return directions.reduce((acc, d) => {
+            switch (d) {
+                case "U": return new Point(acc.x, acc.y + 1);
+                case "D": return new Point(acc.x, acc.y - 1);
+                case "L": return new Point(acc.x - 1, acc.y);
+                case "R": return new Point(acc.x + 1, acc.y);
+            }
+        }, this);
     }
 
-    equals(point) {
-        return point.x === this.x && point.y === this.y;
+    around(point) {
+        const d = this.delta(point);
+        return Math.abs(d.x) <= 1 && Math.abs(d.y) <= 1;
     }
 
-    corners(point) {
-        return (this.x === point.x + 1 && this.y === point.y + 1) ||
-            (this.x === point.x - 1 && this.y === point.y + 1) ||
-            (this.x === point.x + 1 && this.y === point.y - 1) ||
-            (this.x === point.x - 1 && this.y === point.y - 1);
-    }
-
-    touches(point) {
-        return (this.x === point.x && this.y === point.y + 1) ||
-            (this.x === point.x && this.y === point.y - 1) ||
-            (this.x === point.x + 1 && this.y === point.y) ||
-            (this.x === point.x - 1 && this.y === point.y);
+    delta(point) {
+        return { x: this.x - point.x, y: this.y - point.y };
     }
 }
