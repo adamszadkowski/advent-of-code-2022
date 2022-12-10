@@ -5,25 +5,25 @@ export class Day9Solution {
     }
 
     countDistinctTailMoves(input) {
-        const moves = this.move(input).tail;
+        const moves = this.move(input).map(m => m.at(-1));
 
         return [...new Set(moves.map(({ x, y }) => `${x}:${y}`))].length;
     }
 
     move(input) {
         const moves = this.decode(input);
-        const headHistory = [new Point(0, 0)];
-        const tailHistory = [new Point(0, 0)];
+        const history = [[new Point(0, 0), new Point(0, 0)]];
 
         moves.forEach(m => {
-            const lastHead = headHistory.at(-1);
+            const last = history.at(-1);
+            const lastHead = last.at(0);
             const nextHead = lastHead.move(m);
-            const lastTail = tailHistory.at(-1);
+            const lastTail = last.at(-1);
             const canMoveTail = !(lastTail.equals(lastHead) || lastTail.equals(nextHead) || lastTail.corners(nextHead) || lastTail.touches(nextHead));
-            tailHistory.push(canMoveTail && lastHead || lastTail);
-            headHistory.push(nextHead);
+            const nextTail = canMoveTail && lastHead || lastTail;
+            history.push([nextHead, nextTail])
         });
-        return { head: headHistory, tail: tailHistory };
+        return history;
     }
 
     decode(input) {
