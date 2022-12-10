@@ -1,5 +1,5 @@
-import { describe, beforeEach, test, expect } from "@jest/globals";
 import { Day9Solution } from "@/day-9/part-1";
+import { beforeEach, describe, expect, test } from "@jest/globals";
 
 describe("day 9", () => {
     let visualizer;
@@ -12,7 +12,7 @@ describe("day 9", () => {
         test("empty result", () => {
             expect(visualizer.visualize([])).toEqual(
                 `.....
-                 .....
+                 ..s..
                  .....`.replace(/ +/g, ""));
         });
 
@@ -30,7 +30,7 @@ describe("day 9", () => {
 
             expect(visualizer.visualize(moves)).toEqual(
                 `....T
-                 ...H.
+                 ..sH.
                  .....`.replace(/ +/g, ""));
         });
 
@@ -39,7 +39,7 @@ describe("day 9", () => {
 
             expect(visualizer.visualize(moves)).toEqual(
                 `...2T
-                 ...1.
+                 ..s1.
                  ...H.`.replace(/ +/g, ""));
         });
     });
@@ -174,7 +174,10 @@ class Visualizer {
         const matrix = [];
         for (let y = 0; y < this.size.y; y++) {
             const row = [];
-            for (let x = 0; x < this.size.x; x++) row.push(".");
+            for (let x = 0; x < this.size.x; x++) {
+                const sign = y === this.center.y && x === this.center.x ? "s" : "."
+                row.push(sign);
+            }
             matrix.push(row);
         }
         return matrix;
