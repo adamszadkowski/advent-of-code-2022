@@ -6,32 +6,32 @@ describe("day 9", () => {
 
     describe("moves visualisation", () => {
         beforeEach(() => {
-            visualizer = new Visualizer({ x: 3, y: 3 }, { x: 1, y: 1 });
+            visualizer = new Visualizer({ x: 5, y: 3 }, { x: 2, y: 1 });
         });
 
         test("empty result", () => {
             expect(visualizer.visualize([])).toEqual(
-                `...
-                 ...
-                 ...`.replace(/ +/g, ""));
+                `.....
+                 .....
+                 .....`.replace(/ +/g, ""));
         });
 
         test("single point", () => {
             const moves = [{ x: 0, y: 0 }];
 
             expect(visualizer.visualize(moves)).toEqual(
-                `...
-                 .H.
-                 ...`.replace(/ +/g, ""));
+                `.....
+                 ..H..
+                 .....`.replace(/ +/g, ""));
         });
 
         test("two points", () => {
-            const moves = [{ x: 0, y: 0 }, { x: 1, y: 1 }];
+            const moves = [{ x: 1, y: 0 }, { x: 2, y: 1 }];
 
             expect(visualizer.visualize(moves)).toEqual(
-                `..T
-                 .H.
-                 ...`.replace(/ +/g, ""));
+                `....T
+                 ...H.
+                 .....`.replace(/ +/g, ""));
         });
     });
 
@@ -146,7 +146,7 @@ class Visualizer {
         const matrix = this.createMatrix();
 
         input.forEach(({ x, y }, index) => {
-            matrix[x + this.center.x][y + this.center.y] = index === 0 ? "H" : "T";
+            matrix[y + this.center.y][x + this.center.x] = index === 0 ? "H" : "T";
         });
 
         return matrix
@@ -157,9 +157,9 @@ class Visualizer {
 
     createMatrix() {
         const matrix = [];
-        for (let x = 0; x < this.size.x; x++) {
+        for (let y = 0; y < this.size.y; y++) {
             const row = [];
-            for (let y = 0; y < this.size.y; y++) row.push(".");
+            for (let x = 0; x < this.size.x; x++) row.push(".");
             matrix.push(row);
         }
         return matrix;
