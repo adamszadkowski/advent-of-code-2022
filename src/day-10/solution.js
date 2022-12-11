@@ -1,4 +1,8 @@
 export class Day10Solution {
+    strengths(input) {
+        return this.cycle(input).map((c) => ({ cycle: c.cycle, x: c.x, strength: c.cycle * c.x }));
+    }
+
     cycle(input) {
         const commands = this.load(input);
         const cycles = [];

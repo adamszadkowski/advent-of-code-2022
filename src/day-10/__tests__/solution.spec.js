@@ -55,4 +55,19 @@ describe("day 10", () => {
             { cycle: 6, command: { command: "noop", x: null }, x: -1 },
         ]);
     });
+
+    test("calculate strength", () => {
+        const input = `noop
+                       addx 3
+                       addx -5
+                       noop`.replace(/\n +/g, "\n");
+        expect(solution.strengths(input)).toEqual([
+            { cycle: 1, x: 1, strength: 1 },
+            { cycle: 2, x: 1, strength: 2 },
+            { cycle: 3, x: 1, strength: 3 },
+            { cycle: 4, x: 4, strength: 16 },
+            { cycle: 5, x: 4, strength: 20 },
+            { cycle: 6, x: -1, strength: -6 },
+        ]);
+    });
 });
