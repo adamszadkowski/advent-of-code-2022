@@ -12,17 +12,8 @@ export class Day10Solution {
     }
 
     draw(input) {
-        const cycles = this.cycle(input);
-
-        let result = "";
-
-        while (cycles.length > 0) {
-            const c = cycles.shift();
-            result += c.crtOn ? "#" : ".";
-            if (c.cycle % 40 === 0) result += "\n";
-        }
-
-        return result;
+        return this.cycle(input)
+            .reduce((acc, c) => acc + (c.crtOn ? "#" : ".") + (c.cycle % 40 === 0 ? "\n" : ""), "");
     }
 
     sumOfStrengths(input) {
@@ -49,8 +40,7 @@ export class Day10Solution {
             counter++;
         };
 
-        while (commands.length > 0) {
-            const command = commands.shift();
+        commands.forEach(command => {
             if (command.command === "noop") {
                 pushCycle(command);
             } else if (command.command === "addx") {
@@ -58,7 +48,7 @@ export class Day10Solution {
                 pushCycle(command);
                 x += command.x;
             }
-        }
+        });
 
         return cycles;
     }
