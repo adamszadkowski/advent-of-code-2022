@@ -1,4 +1,4 @@
-import { Day9Solution } from "@/day-9/part-1";
+import { Day9Solution } from "@/day-9/solution";
 import { beforeEach, describe, expect, test } from "@jest/globals";
 import { Visualizer } from "@/day-9/visualizer";
 
