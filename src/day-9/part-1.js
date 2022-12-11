@@ -19,21 +19,13 @@ export class Day9Solution {
         const history = [Array(this.size).fill(new Point(0, 0))];
 
         moves.forEach(m => {
-            let [lastTop, ...last] = history.at(-1);
-            let nextTop = lastTop.move(m);
-            const nexts = [nextTop];
+            const [lastTop, ...last] = history.at(-1);
+            const nexts = [lastTop.move(m)];
 
             while (nexts.length < this.size) {
-                let lastBottom = last.shift();
-                let nextBottom = lastBottom;
-                if (!lastBottom.around(nextTop)) {
-                    const d = lastBottom.delta(nextTop);
-                    nextBottom = new Point(lastBottom.x - Math.sign(d.x), lastBottom.y - Math.sign(d.y));
-                }
-
+                const previous = nexts.at(-1);
+                const nextBottom = last.shift().follow(previous);
                 nexts.push(nextBottom);
-                nextTop = nextBottom;
-                lastTop = lastBottom;
             }
 
             history.push(nexts);
@@ -78,9 +70,11 @@ class Point {
         }, this);
     }
 
-    around(point) {
+    follow(point) {
         const d = this.delta(point);
-        return Math.abs(d.x) <= 1 && Math.abs(d.y) <= 1;
+        const isAround = Math.abs(d.x) <= 1 && Math.abs(d.y) <= 1;
+        if (isAround) return this;
+        else return new Point(this.x - Math.sign(d.x), this.y - Math.sign(d.y));
     }
 
     delta(point) {
