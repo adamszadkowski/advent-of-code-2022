@@ -30,17 +30,20 @@ export class Day10Solution {
         let counter = 1;
         let x = 1;
 
+        const pushCycle = (command) => {
+            cycles.push({ cycle: counter, command, x, crtOn: Math.abs(counter - x) <= 1 });
+            counter++;
+        };
+
         while (commands.length > 0) {
             const command = commands.shift();
             if (command.command === "noop") {
-                cycles.push({ cycle: counter, command, x, crtOn: Math.abs(counter - x) <= 1 });
+                pushCycle(command);
             } else if (command.command === "addx") {
-                cycles.push({ cycle: counter, command, x, crtOn: Math.abs(counter - x) <= 1 });
-                counter++;
-                cycles.push({ cycle: counter, command, x, crtOn: Math.abs(counter - x) <= 1 });
+                pushCycle(command);
+                pushCycle(command);
                 x += command.x;
             }
-            counter++;
         }
 
         return cycles;
