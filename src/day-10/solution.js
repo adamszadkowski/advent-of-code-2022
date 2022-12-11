@@ -33,10 +33,11 @@ export class Day10Solution {
         while (commands.length > 0) {
             const command = commands.shift();
             if (command.command === "noop") {
-                cycles.push({ cycle: counter, command, x });
+                cycles.push({ cycle: counter, command, x, crtOn: Math.abs(counter - x) <= 1 });
             } else if (command.command === "addx") {
-                cycles.push({ cycle: counter++, command, x });
-                cycles.push({ cycle: counter, command, x });
+                cycles.push({ cycle: counter, command, x, crtOn: Math.abs(counter - x) <= 1 });
+                counter++;
+                cycles.push({ cycle: counter, command, x, crtOn: Math.abs(counter - x) <= 1 });
                 x += command.x;
             }
             counter++;
