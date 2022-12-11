@@ -1,4 +1,16 @@
 export class Day10Solution {
+    solve() {
+        const input = this.httpGet("https://adventofcode.com/2022/day/10/input");
+        return this.sumOfStrengths(input);
+    }
+
+    httpGet(url) {
+        var r = new XMLHttpRequest();
+        r.open("GET", url, false);
+        r.send(null);
+        return r.responseText;
+    }
+
     sumOfStrengths(input) {
         const cycles = [20, 60, 100, 140, 180, 220];
 
