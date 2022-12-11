@@ -1,4 +1,13 @@
 export class Day10Solution {
+    sumOfStrengths(input) {
+        const cycles = [20, 60, 100, 140, 180, 220];
+
+        return this.strengths(input)
+            .filter(({ cycle }) => cycles.includes(cycle))
+            .map(({ strength }) => strength)
+            .reduce((acc, c) => acc += c);
+    }
+
     strengths(input) {
         return this.cycle(input).map((c) => ({ cycle: c.cycle, x: c.x, strength: c.cycle * c.x }));
     }
