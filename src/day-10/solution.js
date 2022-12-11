@@ -11,6 +11,19 @@ export class Day10Solution {
         return r.responseText;
     }
 
+    draw(input) {
+        const cycles = this.cycle(input);
+
+        let result = "";
+
+        while (cycles.length > 0) {
+            const c = cycles.shift();
+            result += c.crtOn ? "#" : ".";
+        }
+
+        return result;
+    }
+
     sumOfStrengths(input) {
         const cycles = [20, 60, 100, 140, 180, 220];
 

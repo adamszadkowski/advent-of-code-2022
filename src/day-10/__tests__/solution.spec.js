@@ -32,6 +32,24 @@ describe("day 10", () => {
         ]);
     });
 
+    test("draw pixels", () => {
+        const input = `noop
+                       addx 3
+                       addx -5
+                       noop`.replace(/\n +/g, "\n");
+        expect(solution.cycle(input)).toEqual([
+            { cycle: 1, command: { command: "noop", x: null }, x: 1, crtOn: true },
+            { cycle: 2, command: { command: "addx", x: 3 }, x: 1, crtOn: true },
+            { cycle: 3, command: { command: "addx", x: 3 }, x: 1, crtOn: false },
+            { cycle: 4, command: { command: "addx", x: -5 }, x: 4, crtOn: true },
+            { cycle: 5, command: { command: "addx", x: -5 }, x: 4, crtOn: true },
+            { cycle: 6, command: { command: "noop", x: null }, x: -1, crtOn: false },
+        ]);
+        expect(solution.draw(input)).toEqual(
+            `##.##.`
+        );
+    });
+
     test("calculate sum of strengths", () => {
         const input = `addx 15
                        addx -11
