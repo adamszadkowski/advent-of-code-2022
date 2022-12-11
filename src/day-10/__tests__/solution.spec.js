@@ -25,7 +25,7 @@ describe("day 10", () => {
         expect(solution.cycle(input)).toEqual([
             { cycle: 1, command: { command: "noop", x: null }, x: 1, crtOn: true },
             { cycle: 2, command: { command: "addx", x: 3 }, x: 1, crtOn: true },
-            { cycle: 3, command: { command: "addx", x: 3 }, x: 1, crtOn: false },
+            { cycle: 3, command: { command: "addx", x: 3 }, x: 1, crtOn: true },
             { cycle: 4, command: { command: "addx", x: -5 }, x: 4, crtOn: true },
             { cycle: 5, command: { command: "addx", x: -5 }, x: 4, crtOn: true },
             { cycle: 6, command: { command: "noop", x: null }, x: -1, crtOn: false },
@@ -37,16 +37,8 @@ describe("day 10", () => {
                        addx 3
                        addx -5
                        noop`.replace(/\n +/g, "\n");
-        expect(solution.cycle(input)).toEqual([
-            { cycle: 1, command: { command: "noop", x: null }, x: 1, crtOn: true },
-            { cycle: 2, command: { command: "addx", x: 3 }, x: 1, crtOn: true },
-            { cycle: 3, command: { command: "addx", x: 3 }, x: 1, crtOn: false },
-            { cycle: 4, command: { command: "addx", x: -5 }, x: 4, crtOn: true },
-            { cycle: 5, command: { command: "addx", x: -5 }, x: 4, crtOn: true },
-            { cycle: 6, command: { command: "noop", x: null }, x: -1, crtOn: false },
-        ]);
         expect(solution.draw(input)).toEqual(
-            `##.##.`
+            `#####.`
         );
     });
 
@@ -198,5 +190,14 @@ describe("day 10", () => {
                        noop
                        noop`.replace(/\n +/g, "\n");
         expect(solution.sumOfStrengths(input)).toEqual(13140);
+        expect(solution.draw(input)).toEqual(
+            `##..##..##..##..##..##..##..##..##..##..
+             ###...###...###...###...###...###...###.
+             ####....####....####....####....####....
+             #####.....#####.....#####.....#####.....
+             ######......######......######......####
+             #######.......#######.......#######.....
+             `.replace(/ +/g, "")
+        );
     });
 });

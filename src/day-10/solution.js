@@ -19,6 +19,7 @@ export class Day10Solution {
         while (cycles.length > 0) {
             const c = cycles.shift();
             result += c.crtOn ? "#" : ".";
+            if (c.cycle % 40 === 0) result += "\n";
         }
 
         return result;
@@ -44,7 +45,7 @@ export class Day10Solution {
         let x = 1;
 
         const pushCycle = (command) => {
-            cycles.push({ cycle: counter, command, x, crtOn: Math.abs(counter - x) <= 1 });
+            cycles.push({ cycle: counter, command, x, crtOn: Math.abs((counter - 1) % 40 - x) <= 1 });
             counter++;
         };
 
