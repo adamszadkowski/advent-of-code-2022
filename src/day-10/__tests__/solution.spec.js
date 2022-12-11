@@ -20,7 +20,7 @@ describe("day 10", () => {
     test("cycle noop command", () => {
         const input = `noop`;
         expect(solution.cycle(input)).toEqual([
-            { cycle: 1, command: "noop", x: 1 },
+            { cycle: 1, command: { command: "noop", x: null }, x: 1 },
         ]);
     });
 
@@ -28,16 +28,16 @@ describe("day 10", () => {
         const input = `noop
                        noop`.replace(/\n +/g, "\n");
         expect(solution.cycle(input)).toEqual([
-            { cycle: 1, command: "noop", x: 1 },
-            { cycle: 2, command: "noop", x: 1 },
+            { cycle: 1, command: { command: "noop", x: null }, x: 1 },
+            { cycle: 2, command: { command: "noop", x: null }, x: 1 },
         ]);
     });
 
     test("cycle addx command", () => {
         const input = `addx 2`;
         expect(solution.cycle(input)).toEqual([
-            { cycle: 1, command: "addx", x: 1 },
-            { cycle: 2, command: "addx", x: 1 },
+            { cycle: 1, command: { command: "addx", x: 2 }, x: 1 },
+            { cycle: 2, command: { command: "addx", x: 2 }, x: 1 },
         ]);
     });
 
@@ -47,12 +47,12 @@ describe("day 10", () => {
                        addx -5
                        noop`.replace(/\n +/g, "\n");
         expect(solution.cycle(input)).toEqual([
-            { cycle: 1, command: "noop", x: 1 },
-            { cycle: 2, command: "addx", x: 1 },
-            { cycle: 3, command: "addx", x: 1 },
-            { cycle: 4, command: "addx", x: 4 },
-            { cycle: 5, command: "addx", x: 4 },
-            { cycle: 6, command: "noop", x: -1 },
+            { cycle: 1, command: { command: "noop", x: null }, x: 1 },
+            { cycle: 2, command: { command: "addx", x: 3 }, x: 1 },
+            { cycle: 3, command: { command: "addx", x: 3 }, x: 1 },
+            { cycle: 4, command: { command: "addx", x: -5 }, x: 4 },
+            { cycle: 5, command: { command: "addx", x: -5 }, x: 4 },
+            { cycle: 6, command: { command: "noop", x: null }, x: -1 },
         ]);
     });
 });
