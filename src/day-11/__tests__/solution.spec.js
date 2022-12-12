@@ -15,11 +15,15 @@ Monkey 0:
   Test: divisible by 23
     If true: throw to monkey 2
     If false: throw to monkey 3`.replace(/^\n/, "");
-        expect(solution.load(input)).toEqual([
+
+        const monkeys = solution.load(input);
+
+        expect(monkeys).toEqual([
             expect.objectContaining({
                 monkeyId: 0,
                 items: [79, 98],
             }),
         ]);
+        expect(monkeys[0].operation(2)).toBe(2 * 19);
     });
 });
