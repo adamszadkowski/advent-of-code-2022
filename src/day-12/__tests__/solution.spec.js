@@ -14,8 +14,8 @@ describe("day 12", () => {
         beforeEach(() => {
             const input = `
 gaaae
-aaaaa
-aaaaa
+aSaaa
+aaaZa
 aaaaa
 faaaz`.replace(/\n/, "");
             loaded = solution.load(input);
@@ -43,6 +43,14 @@ faaaz`.replace(/\n/, "");
             test(`hill (${x}, ${y}) exists = ${exists}`, () => {
                 expect(loaded.exists(x, y)).toBe(exists);
             });
+        });
+
+        test("find start", () => {
+            expect(loaded.getStart()).toEqual({x: 1, y: 3});
+        });
+
+        test("find end", () => {
+            expect(loaded.getEnd()).toEqual({x: 3, y: 2});
         });
     });
 });
