@@ -6,7 +6,7 @@ describe("day 11", () => {
 
     describe("part 1", () => {
         beforeEach(() => {
-            solution = new Day11Solution(3);
+            solution = new Day11Solution(3, 20);
         });
 
         test("parse input", () => {
@@ -31,10 +31,12 @@ Monkey 1:
                 expect.objectContaining({
                     monkeyId: 0,
                     items: [79, 98],
+                    divisible: 23,
                 }),
                 expect.objectContaining({
                     monkeyId: 1,
                     items: [54, 65, 75, 74],
+                    divisible: 19,
                 }),
             ]);
             expect(monkeys[0].operation(2)).toBe(2 * 19);
@@ -81,7 +83,7 @@ Monkey 3:
 
     describe("part 2", () => {
         beforeEach(() => {
-            solution = new Day11Solution(1);
+            solution = new Day11Solution(1, 10000);
         });
 
         test("execute sample monkey program", () => {
@@ -114,7 +116,7 @@ Monkey 3:
     If true: throw to monkey 0
     If false: throw to monkey 1`.replace(/^\n/, "");
 
-            expect(solution.monkeyBusiness(input)).toBe(10197)
+            expect(solution.monkeyBusiness(input)).toBe(2713310158)
         });
     });
 });

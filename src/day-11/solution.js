@@ -1,8 +1,9 @@
 function $() { }
 
 export class Day11Solution {
-    constructor(divisor) {
+    constructor(divisor, iterations) {
         this.divisor = divisor;
+        this.iterations = iterations;
     }
 
     solve() {
@@ -20,13 +21,15 @@ export class Day11Solution {
 
     monkeyBusiness(input) {
         const monkeys = this.load(input);
+        const allDivisibles = monkeys.reduce((acc, c) => acc * c.divisible, 1);
+
         const inspectedItems = Array(monkeys.length).fill(0);
 
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < this.iterations; i++) {
             for (const m of monkeys) {
                 while (m.items.length > 0) {
                     const item = m.items.shift();
-                    const worryLevel = Math.floor(m.operation(item) / this.divisor);
+                    const worryLevel = Math.floor(m.operation(item) / this.divisor) % allDivisibles;
                     const nextMonkey = m.nextMonkey(worryLevel);
                     monkeys[nextMonkey].items.push(worryLevel);
                     inspectedItems[m.monkeyId]++;
@@ -59,7 +62,8 @@ export class Day11Solution {
             monkeyId: Number(monkeyId),
             items: itemsList.split(", ").map(i => Number(i)),
             operation: (o) => value === "old" ? operation(o, o) : operation(o, Number(value)),
-            nextMonkey: (w) => Number(w % divisible === 0 ? trueMonkey : falseMonkey),
+            divisible: Number(divisible),
+            nextMonkey: (w) => Number(w % Number(divisible) === 0 ? trueMonkey : falseMonkey),
         };
     }
 }
