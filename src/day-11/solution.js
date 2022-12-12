@@ -1,6 +1,10 @@
 function $() { }
 
 export class Day11Solution {
+    constructor(divisor) {
+        this.divisor = divisor;
+    }
+
     solve() {
         const input = this.httpGet("https://adventofcode.com/2022/day/11/input");
         const result = this.monkeyBusiness(input);
@@ -22,7 +26,7 @@ export class Day11Solution {
             for (const m of monkeys) {
                 while (m.items.length > 0) {
                     const item = m.items.shift();
-                    const worryLevel = Math.floor(m.operation(item) / 3);
+                    const worryLevel = Math.floor(m.operation(item) / this.divisor);
                     const nextMonkey = m.nextMonkey(worryLevel);
                     monkeys[nextMonkey].items.push(worryLevel);
                     inspectedItems[m.monkeyId]++;

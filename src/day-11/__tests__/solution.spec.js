@@ -4,12 +4,13 @@ import { Day11Solution } from "../solution";
 describe("day 11", () => {
     let solution;
 
-    beforeEach(() => {
-        solution = new Day11Solution();
-    });
+    describe("part 1", () => {
+        beforeEach(() => {
+            solution = new Day11Solution(3);
+        });
 
-    test("parse input", () => {
-        const input = `
+        test("parse input", () => {
+            const input = `
 Monkey 0:
   Starting items: 79, 98
   Operation: new = old * 19
@@ -24,28 +25,28 @@ Monkey 1:
     If true: throw to monkey 2
     If false: throw to monkey 0`.replace(/^\n/, "");
 
-        const monkeys = solution.load(input);
+            const monkeys = solution.load(input);
 
-        expect(monkeys).toEqual([
-            expect.objectContaining({
-                monkeyId: 0,
-                items: [79, 98],
-            }),
-            expect.objectContaining({
-                monkeyId: 1,
-                items: [54, 65, 75, 74],
-            }),
-        ]);
-        expect(monkeys[0].operation(2)).toBe(2 * 19);
-        expect(monkeys[0].nextMonkey(23 * 2)).toBe(2);
-        expect(monkeys[0].nextMonkey(22)).toBe(3);
-        expect(monkeys[1].operation(2)).toBe(2 + 2);
-        expect(monkeys[1].nextMonkey(19 * 2)).toBe(2);
-        expect(monkeys[1].nextMonkey(20)).toBe(0);
-    });
+            expect(monkeys).toEqual([
+                expect.objectContaining({
+                    monkeyId: 0,
+                    items: [79, 98],
+                }),
+                expect.objectContaining({
+                    monkeyId: 1,
+                    items: [54, 65, 75, 74],
+                }),
+            ]);
+            expect(monkeys[0].operation(2)).toBe(2 * 19);
+            expect(monkeys[0].nextMonkey(23 * 2)).toBe(2);
+            expect(monkeys[0].nextMonkey(22)).toBe(3);
+            expect(monkeys[1].operation(2)).toBe(2 + 2);
+            expect(monkeys[1].nextMonkey(19 * 2)).toBe(2);
+            expect(monkeys[1].nextMonkey(20)).toBe(0);
+        });
 
-    test("execute sample monkey program", () => {
-        const input = `
+        test("execute sample monkey program", () => {
+            const input = `
 Monkey 0:
   Starting items: 79, 98
   Operation: new = old * 19
@@ -74,6 +75,7 @@ Monkey 3:
     If true: throw to monkey 0
     If false: throw to monkey 1`.replace(/^\n/, "");
 
-        expect(solution.monkeyBusiness(input)).toBe(10605)
+            expect(solution.monkeyBusiness(input)).toBe(10605)
+        });
     });
 });
