@@ -31,5 +31,18 @@ faaaz`.replace(/\n/, "");
                 expect(loaded.hill(x, y)).toBe(hill.charCodeAt(0) - "a".charCodeAt(0));
             });
         });
+
+        [
+            { x: 0, y: 0, exists: true },
+            { x: 4, y: 4, exists: true },
+            { x: -1, y: 4, exists: false },
+            { x: 4, y: -1, exists: false },
+            { x: 0, y: 5, exists: false },
+            { x: 5, y: 0, exists: false },
+        ].forEach(({ x, y, exists }) => {
+            test(`hill (${x}, ${y}) exists = ${exists}`, () => {
+                expect(loaded.exists(x, y)).toBe(exists);
+            });
+        });
     });
 });
