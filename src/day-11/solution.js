@@ -1,4 +1,24 @@
 export class Day11Solution {
+    monkeyBusiness(input) {
+        const monkeys = this.load(input);
+        const inspectedItems = Array(monkeys.length).fill(0);
+
+        for (let i = 0; i < 20; i++) {
+            for (const m of monkeys) {
+                while (m.items.length > 0) {
+                    const item = m.items.shift();
+                    const worryLevel = Math.floor(m.operation(item) / 3);
+                    const nextMonkey = m.nextMonkey(worryLevel);
+                    monkeys[nextMonkey].items.push(worryLevel);
+                    inspectedItems[m.monkeyId]++;
+                }
+            }
+        }
+
+        const results = inspectedItems.sort((a, b) => b - a);
+        return results[0] * results[1];
+    }
+
     load(input) {
         return input.split("\n\n").map(m => this.loadMonkey(m));
     }
