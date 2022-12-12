@@ -7,6 +7,7 @@ describe("day 11", () => {
     beforeEach(() => {
         solution = new Day11Solution();
     });
+
     test("parse input", () => {
         const input = `
 Monkey 0:
@@ -25,5 +26,7 @@ Monkey 0:
             }),
         ]);
         expect(monkeys[0].operation(2)).toBe(2 * 19);
+        expect(monkeys[0].nextMonkey(23 * 2)).toBe(2);
+        expect(monkeys[0].nextMonkey(22)).toBe(3);
     });
 });
