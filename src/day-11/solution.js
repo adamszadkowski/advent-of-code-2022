@@ -1,5 +1,9 @@
 export class Day11Solution {
     load(input) {
+        return input.split("\n\n").map(m => this.loadMonkey(m));
+    }
+
+    loadMonkey(input) {
         const [monkeyLine, itemsLine, operationLine, divisibleLine, trueLine, falseLine] = input.split("\n");
         const [, monkeyId] = /^Monkey (\d+):$/.exec(monkeyLine);
         const [, itemsList] = /^ {2}Starting items: (.*)$/.exec(itemsLine);
@@ -12,11 +16,11 @@ export class Day11Solution {
             ? ((a, b) => a * b)
             : ((a, b) => a + b);
 
-        return [{
+        return {
             monkeyId: Number(monkeyId),
             items: itemsList.split(", ").map(i => Number(i)),
             operation: (o) => operation(o, Number(value)),
             nextMonkey: (w) => Number(w % divisible === 0 ? trueMonkey : falseMonkey),
-        }];
+        };
     }
 }
