@@ -19,7 +19,7 @@ Monkey 0:
 
 Monkey 1:
   Starting items: 54, 65, 75, 74
-  Operation: new = old + 6
+  Operation: new = old + old
   Test: divisible by 19
     If true: throw to monkey 2
     If false: throw to monkey 0`.replace(/^\n/, "");
@@ -39,7 +39,7 @@ Monkey 1:
         expect(monkeys[0].operation(2)).toBe(2 * 19);
         expect(monkeys[0].nextMonkey(23 * 2)).toBe(2);
         expect(monkeys[0].nextMonkey(22)).toBe(3);
-        expect(monkeys[1].operation(2)).toBe(2 + 6);
+        expect(monkeys[1].operation(2)).toBe(2 + 2);
         expect(monkeys[1].nextMonkey(19 * 2)).toBe(2);
         expect(monkeys[1].nextMonkey(20)).toBe(0);
     });

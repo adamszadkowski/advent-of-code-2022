@@ -7,7 +7,7 @@ export class Day11Solution {
         const [monkeyLine, itemsLine, operationLine, divisibleLine, trueLine, falseLine] = input.split("\n");
         const [, monkeyId] = /^Monkey (\d+):$/.exec(monkeyLine);
         const [, itemsList] = /^ {2}Starting items: (.*)$/.exec(itemsLine);
-        const [, op, value] = /^ {2}Operation: new = old ([*+]) (\d+)$/.exec(operationLine);
+        const [, op, value] = /^ {2}Operation: new = old ([*+]) (.*)$/.exec(operationLine);
         const [, divisible] = /^ {2}Test: divisible by (\d+)$/.exec(divisibleLine);
         const [, trueMonkey] = /^ {4}If true: throw to monkey (\d+)$/.exec(trueLine);
         const [, falseMonkey] = /^ {4}If false: throw to monkey (\d+)$/.exec(falseLine);
@@ -19,7 +19,7 @@ export class Day11Solution {
         return {
             monkeyId: Number(monkeyId),
             items: itemsList.split(", ").map(i => Number(i)),
-            operation: (o) => operation(o, Number(value)),
+            operation: (o) => value === "old" ? operation(o, o) : operation(o, Number(value)),
             nextMonkey: (w) => Number(w % divisible === 0 ? trueMonkey : falseMonkey),
         };
     }
