@@ -1,4 +1,19 @@
+function $() { }
+
 export class Day11Solution {
+    solve() {
+        const input = this.httpGet("https://adventofcode.com/2022/day/11/input");
+        const result = this.monkeyBusiness(input);
+        $("input[name=answer]").value = result;
+    }
+
+    httpGet(url) {
+        var r = new XMLHttpRequest();
+        r.open("GET", url, false);
+        r.send(null);
+        return r.responseText;
+    }
+
     monkeyBusiness(input) {
         const monkeys = this.load(input);
         const inspectedItems = Array(monkeys.length).fill(0);
