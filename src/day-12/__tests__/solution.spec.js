@@ -62,7 +62,7 @@ faaaz`.replace(/\n/, "");
         });
     });
 
-    describe("part", () => {
+    describe("part 1", () => {
         test("count sample data", () => {
             const input = `
 Sabqponm

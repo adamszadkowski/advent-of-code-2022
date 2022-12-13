@@ -1,4 +1,19 @@
+function $() { }
+
 export class Day12Solution {
+    solve() {
+        const input = this.httpGet("https://adventofcode.com/2022/day/12/input");
+        const result = this.count(input);
+        $("input[name=answer]").value = result;
+    }
+
+    httpGet(url) {
+        var r = new XMLHttpRequest();
+        r.open("GET", url, false);
+        r.send(null);
+        return r.responseText;
+    }
+
     count(input) {
         const map = this.load(input);
 
