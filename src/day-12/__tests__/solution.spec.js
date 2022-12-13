@@ -15,7 +15,7 @@ describe("day 12", () => {
             const input = `
 gaaae
 aSaaa
-aaaZa
+aaaEa
 aaaaa
 faaaz`.replace(/\n/, "");
             loaded = solution.load(input);
@@ -51,6 +51,14 @@ faaaz`.replace(/\n/, "");
 
         test("find end", () => {
             expect(loaded.getEnd()).toEqual({ x: 3, y: 2 });
+        });
+
+        test("load start hill", () => {
+            expect(loaded.hill(loaded.getStart())).toBe(0);
+        });
+
+        test("load end hill", () => {
+            expect(loaded.hill(loaded.getEnd())).toBe(25);
         });
     });
 });
