@@ -46,11 +46,11 @@ faaaz`.replace(/\n/, "");
         });
 
         test("find start", () => {
-            expect(loaded.getStart()).toEqual({ x: 1, y: 3 });
+            expect(loaded.getStart()).toEqual({ x: 1, y: 3, distance: 0 });
         });
 
         test("find end", () => {
-            expect(loaded.getEnd()).toEqual({ x: 3, y: 2 });
+            expect(loaded.getEnd()).toEqual({ x: 3, y: 2, distance: 0 });
         });
 
         test("load start hill", () => {
@@ -61,4 +61,17 @@ faaaz`.replace(/\n/, "");
             expect(loaded.hill(loaded.getEnd())).toBe(25);
         });
     });
+
+    describe("part", () => {
+        test("count sample data", () => {
+            const input = `
+Sabqponm
+abcryxxl
+accszExk
+acctuvwj
+abdefghi`.replace(/^\n/, "");
+
+            expect(solution.count(input)).toBe(31);
+        });
+    })
 });
