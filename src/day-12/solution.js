@@ -31,22 +31,29 @@ export class Day12Solution {
             return new Hill(x, y);
         };
 
+        const start = find("S");
+        const end = find("E");
+
         return {
             hill({ x, y }) {
-                const position = (width + 1) * (height - y - 1);
-                let value = input.charCodeAt(position + x);
-                if (value === "S".charCodeAt(0)) value = "a".charCodeAt(0);
-                else if (value === "E".charCodeAt(0)) value = "z".charCodeAt(0);
-                return value - "a".charCodeAt(0);
+                const extract = (v) => v.charCodeAt(0) - "a".charCodeAt(0);
+
+                const line = (width + 1) * (height - y - 1);
+                const value = input.charAt(line + x);
+                switch (value) {
+                    case "S": return extract("a");
+                    case "E": return extract("z");
+                    default: return extract(value);
+                }
             },
             exists({ x, y }) {
-                return x >= 0 && y >= 0 && x <= (width - 1) && y <= (height - 1);
+                return x >= 0 && y >= 0 && x < width && y < height;
             },
             getStart() {
-                return find("S");
+                return start;
             },
             getEnd() {
-                return find("E");
+                return end;
             }
         };
     }
