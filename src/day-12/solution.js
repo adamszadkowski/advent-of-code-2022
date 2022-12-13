@@ -3,7 +3,7 @@ function $() { }
 export class Day12Solution {
     solve() {
         const input = this.httpGet("https://adventofcode.com/2022/day/12/input");
-        const result = this.count(input);
+        const result = this.countUp(input);
         $("input[name=answer]").value = result;
     }
 
@@ -14,20 +14,34 @@ export class Day12Solution {
         return r.responseText;
     }
 
-    count(input) {
+    countUp(input) {
         const map = this.load(input);
+        return this.count({
+            start: map.getStart(),
+            isEnd(current) { return current.equals(map.getEnd()); },
+            canHike(next, current) { return map.exists(next) && (map.hill(next) - map.hill(current)) <= 1; },
+        });
+    }
 
-        const hills = [map.getStart()];
+    countDown(input) {
+        const map = this.load(input);
+        return this.count({
+            start: map.getEnd(),
+            isEnd(current) { return map.hill(current) === 0; },
+            canHike(next, current) { return map.exists(next) && (map.hill(current) - map.hill(next)) <= 1; },
+        });
+    }
+
+    count({ start, isEnd, canHike }) {
+        const hills = [start];
         const visited = new Set();
 
         while (hills.length > 0) {
             const current = hills.shift();
             if (visited.has(current.toString())) continue;
-            if (current.equals(map.getEnd())) return current.distance;
+            if (isEnd(current)) return current.distance;
 
-            const next = current.getSides()
-                .filter(s => map.exists(s))
-                .filter(s => (map.hill(s) - map.hill(current)) <= 1);
+            const next = current.getSides().filter(next => canHike(next, current));
             hills.push(...next);
             visited.add(current.toString());
         }

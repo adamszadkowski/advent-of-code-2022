@@ -71,7 +71,20 @@ accszExk
 acctuvwj
 abdefghi`.replace(/^\n/, "");
 
-            expect(solution.count(input)).toBe(31);
+            expect(solution.countUp(input)).toBe(31);
         });
     })
+
+    describe("part 2", () => {
+        test("count sample data", () => {
+            const input = `
+Sabqponm
+abcryxxl
+accszExk
+acctuvwj
+abdefghi`.replace(/^\n/, "");
+
+            expect(solution.countDown(input)).toBe(29);
+        });
+    });
 });
