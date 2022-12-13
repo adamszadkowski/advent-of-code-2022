@@ -11,11 +11,11 @@ export class Day12Solution {
         };
 
         return {
-            hill(x, y) {
+            hill({ x, y }) {
                 const position = (width + 1) * (height - y - 1);
                 return input.charCodeAt(position + x) - "a".charCodeAt(0);
             },
-            exists(x, y) {
+            exists({ x, y }) {
                 return x >= 0 && y >= 0 && x <= (width - 1) && y <= (height - 1);
             },
             getStart() {

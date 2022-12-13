@@ -28,7 +28,7 @@ faaaz`.replace(/\n/, "");
             { x: 0, y: 4, hill: 'g' },
         ].forEach(({ x, y, hill }) => {
             test(`load hills in (${x}, ${y}) as ${hill}`, () => {
-                expect(loaded.hill(x, y)).toBe(hill.charCodeAt(0) - "a".charCodeAt(0));
+                expect(loaded.hill({ x, y })).toBe(hill.charCodeAt(0) - "a".charCodeAt(0));
             });
         });
 
@@ -41,16 +41,16 @@ faaaz`.replace(/\n/, "");
             { x: 5, y: 0, exists: false },
         ].forEach(({ x, y, exists }) => {
             test(`hill (${x}, ${y}) exists = ${exists}`, () => {
-                expect(loaded.exists(x, y)).toBe(exists);
+                expect(loaded.exists({ x, y })).toBe(exists);
             });
         });
 
         test("find start", () => {
-            expect(loaded.getStart()).toEqual({x: 1, y: 3});
+            expect(loaded.getStart()).toEqual({ x: 1, y: 3 });
         });
 
         test("find end", () => {
-            expect(loaded.getEnd()).toEqual({x: 3, y: 2});
+            expect(loaded.getEnd()).toEqual({ x: 3, y: 2 });
         });
     });
 });
