@@ -15,16 +15,25 @@ export class Day13Solution {
     }
 
     countCorrectOrder(input) {
-        return this.load(input)
-            .map(({ first, second }) => this.compare(first, second))
-            .reduce((acc, c, i) => acc + (c ? (i + 1) : 0), 0)
+        const messages = this.load(input);
+
+        let current = 1;
+        let result = 0;
+
+        while (messages.length > 0) {
+            const first = messages.shift();
+            const second = messages.shift();
+
+            const isCorrect = this.compare(first, second);
+            result += isCorrect ? current : 0;
+            current++;
+        }
+
+        return result;
     }
 
     load(input) {
-        return input.split("\n\n").map(m => {
-            const [first, second] = m.split("\n");
-            return { first: eval(first), second: eval(second) };
-        });
+        return input.replaceAll("\n\n", "\n").split("\n").map(m => eval(m));
     }
 
     compare(first, second) {
