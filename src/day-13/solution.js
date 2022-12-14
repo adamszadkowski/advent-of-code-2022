@@ -1,4 +1,19 @@
+function $() { }
+
 export class Day13Solution {
+    solve() {
+        const input = this.httpGet("https://adventofcode.com/2022/day/13/input");
+        const result = this.countCorrectOrder(input);
+        $("input[name=answer]").value = result;
+    }
+
+    httpGet(url) {
+        var r = new XMLHttpRequest();
+        r.open("GET", url, false);
+        r.send(null);
+        return r.responseText;
+    }
+
     countCorrectOrder(input) {
         return this.load(input)
             .map(({ first, second }) => this.compare(first, second))
