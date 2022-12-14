@@ -8,6 +8,25 @@ describe("day 13", () => {
         solution = new Day13Solution();
     });
 
+    test("load messages", () => {
+        const input = `
+[1,1,3,1,1]
+[1,1,5,1,1]
+
+[[1],[2,3,4]]
+[[1],4]
+        `.replace(/^\n/, "");
+        expect(solution.load(input)).toEqual([
+            {
+                first: [1, 1, 3, 1, 1],
+                second: [1, 1, 5, 1, 1],
+            }, {
+                first: [[1],[2,3,4]],
+                second: [[1],4],
+            }
+        ]);
+    });
+
     [
         {
             first: 0,

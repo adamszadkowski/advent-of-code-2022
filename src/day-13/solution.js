@@ -1,4 +1,11 @@
 export class Day13Solution {
+    load(input) {
+        return input.split("\n\n").map(m => {
+            const [first, second] = m.split("\n");
+            return { first: eval(first), second: eval(second) };
+        });
+    }
+
     compare(first, second) {
         if (!Array.isArray(first) && !Array.isArray(second)) {
             return first < second;
