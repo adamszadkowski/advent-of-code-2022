@@ -33,6 +33,16 @@ describe("day 13", () => {
             second: [1],
             isCorrect: false,
         },
+        {
+            first: [1, 1],
+            second: [1, 2],
+            isCorrect: true,
+        },
+        {
+            first: [1, 2],
+            second: [1, 1],
+            isCorrect: false,
+        },
     ].forEach(({ first, second, isCorrect }) => {
         test(`messages ${first} and ${second} are in order: ${isCorrect}`, () => {
             expect(compare(first, second)).toBe(isCorrect);
