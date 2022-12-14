@@ -14,6 +14,19 @@ export class Day13Solution {
         return r.responseText;
     }
 
+    countSortedOrder(input) {
+        const messages = this.load(input);
+        messages.push([[2]]);
+        messages.push([[6]]);
+
+        const sorted = messages.sort((a, b) => this.compare(a, b) ? -1 : 1);
+
+        const two = sorted.findIndex(e => e?.[0]?.[0] === 2) + 1;
+        const six = sorted.findIndex(e => e?.[0]?.[0] === 6) + 1;
+
+        return two * six;
+    }
+
     countCorrectOrder(input) {
         const messages = this.load(input);
 
