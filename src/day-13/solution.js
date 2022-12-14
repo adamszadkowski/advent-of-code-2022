@@ -7,6 +7,12 @@ export class Day13Solution {
         $("input[name=answer]").value = result;
     }
 
+    solvePart2() {
+        const input = this.httpGet("https://adventofcode.com/2022/day/13/input");
+        const result = this.countSortedOrder(input);
+        $("input[name=answer]").value = result;
+    }
+
     httpGet(url) {
         var r = new XMLHttpRequest();
         r.open("GET", url, false);
