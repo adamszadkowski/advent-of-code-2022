@@ -1,6 +1,12 @@
-import { describe, expect, test } from "@jest/globals";
+import { beforeEach, describe, expect, test } from "@jest/globals";
+import { Day13Solution } from "../solution";
 
 describe("day 13", () => {
+    let solution;
+
+    beforeEach(() => {
+        solution = new Day13Solution();
+    });
 
     [
         {
@@ -53,24 +59,8 @@ describe("day 13", () => {
         },
     ].forEach(({ first, second }) => {
         test(`messages ${first} and ${second} are in order`, () => {
-            expect(compare(first, second)).toBeTruthy();
-            expect(compare(second, first)).toBeFalsy();
+            expect(solution.compare(first, second)).toBeTruthy();
+            expect(solution.compare(second, first)).toBeFalsy();
         });
     });
 });
-
-function compare(first, second) {
-    if (!Array.isArray(first) && !Array.isArray(second)) {
-        return first < second;
-    } else if (Array.isArray(first) && !Array.isArray(second)) {
-        return compare(first, [second]);
-    } else if (!Array.isArray(first) && Array.isArray(second)) {
-        return compare([first], second);
-    } else {
-        for (let i = 0; i < Math.min(first.length, second.length); i++) {
-            if (compare(first[i], second[i])) return true;
-            else if (compare(second[i], first[i])) return false;
-        }
-        return first.length < second.length;
-    }
-}
