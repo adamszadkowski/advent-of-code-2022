@@ -1,4 +1,10 @@
 export class Day13Solution {
+    countCorrectOrder(input) {
+        return this.load(input)
+            .map(({ first, second }) => this.compare(first, second))
+            .reduce((acc, c, i) => acc + (c ? (i + 1) : 0), 0)
+    }
+
     load(input) {
         return input.split("\n\n").map(m => {
             const [first, second] = m.split("\n");

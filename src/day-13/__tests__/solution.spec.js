@@ -21,8 +21,8 @@ describe("day 13", () => {
                 first: [1, 1, 3, 1, 1],
                 second: [1, 1, 5, 1, 1],
             }, {
-                first: [[1],[2,3,4]],
-                second: [[1],4],
+                first: [[1], [2, 3, 4]],
+                second: [[1], 4],
             }
         ]);
     });
@@ -81,5 +81,34 @@ describe("day 13", () => {
             expect(solution.compare(first, second)).toBeTruthy();
             expect(solution.compare(second, first)).toBeFalsy();
         });
+    });
+
+    test("count sample messages", () => {
+        const input = `
+[1,1,3,1,1]
+[1,1,5,1,1]
+
+[[1],[2,3,4]]
+[[1],4]
+
+[9]
+[[8,7,6]]
+
+[[4,4],4,4]
+[[4,4],4,4,4]
+
+[7,7,7,7]
+[7,7,7]
+
+[]
+[3]
+
+[[[]]]
+[[]]
+
+[1,[2,[3,[4,[5,6,7]]]],8,9]
+[1,[2,[3,[4,[5,6,0]]]],8,9]`.replace(/^\n/, "");
+
+        expect(solution.countCorrectOrder(input)).toBe(13);
     });
 });
