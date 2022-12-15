@@ -2,12 +2,10 @@ import { describe, expect, test } from "@jest/globals";
 
 describe("day 13", () => {
     test("create map", () => {
-        const map = createMap();
+        const input = `497,4 -> 504,4
+                       497,4 -> 497,2 -> 495,2 -> 495,3`.replace(/\n +/g, "\n");
 
-        map.addWall({ x: 497, y: 4 }, { x: 504, y: 4 });
-        map.addWall({ x: 497, y: 4 }, { x: 497, y: 2 });
-        map.addWall({ x: 497, y: 2 }, { x: 495, y: 2 });
-        map.addWall({ x: 495, y: 2 }, { x: 495, y: 3 });
+        const map = load(input);
 
         expect(map.visualize()).toEqual(
             `.....+....
@@ -18,6 +16,28 @@ describe("day 13", () => {
         );
     });
 });
+
+function load(input) {
+    const map = createMap();
+
+    input.split("\n").map(l => {
+        const points = l.split(" -> ");
+
+        const extract = (p) => {
+            const [x, y] = p.split(",");
+            return { x, y };
+        }
+
+        while (points.length > 0) {
+            const [first, second] = points;
+            if (second) map.addWall(extract(first), extract(second));
+            points.shift();
+        }
+    });
+
+    return map;
+}
+
 
 function createMap() {
     const map = [];
