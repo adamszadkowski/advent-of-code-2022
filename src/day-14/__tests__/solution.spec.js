@@ -5,27 +5,24 @@ describe("day 13", () => {
         const map = createMap();
 
         map.addWall({ x: 497, y: 4 }, { x: 504, y: 4 });
+        map.addWall({ x: 497, y: 4 }, { x: 497, y: 2 });
 
         expect(map.visualize()).toEqual(
             `...+....
              ........
-             ........
-             ........
+             #.......
+             #.......
              ########`.replace(/ +/g, ""),
         );
     });
 });
 
 function createMap() {
+    const map = [];
     const minY = 0
     let maxY = 0;
     let minX = 500;
     let maxX = 500;
-
-    const map = [];
-    const e = [];
-    e[500] = "+";
-    map[0] = e;
 
     return {
         addWall(a, b) {
@@ -33,11 +30,18 @@ function createMap() {
             maxX = Math.max(maxX, a.x, b.x);
             maxY = Math.max(maxY, a.y, b.y);
 
-            for (let i = a.x; i <= b.x; i++) {
-                (map[a.y] || (map[a.y] = []))[i] = "#";
+            if (a.x !== b.x) {
+                for (let i = a.x; i <= b.x; i++) {
+                    this.set(i, a.y, "#");
+                }
+            } else if (a.y != b.y) {
+                for (let i = b.y; i <= a.y; i++) {
+                    this.set(a.x, i, "#");
+                }
             }
         },
         visualize() {
+            this.set(500, 0, "+");
             let result = ""
             for (let y = minY; y <= maxY; y++) {
                 let row = "";
@@ -48,5 +52,8 @@ function createMap() {
             }
             return result;
         },
+        set(x, y, s) {
+            (map[y] || (map[y] = []))[x] = s;
+        }
     };
 }
