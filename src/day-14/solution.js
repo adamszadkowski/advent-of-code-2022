@@ -1,4 +1,19 @@
+function $() { }
+
 export class Day14Solution {
+    solve() {
+        const input = this.httpGet("https://adventofcode.com/2022/day/14/input");
+        const result = this.countSandUnits(input);
+        $("input[name=answer]").value = result;
+    }
+
+    httpGet(url) {
+        var r = new XMLHttpRequest();
+        r.open("GET", url, false);
+        r.send(null);
+        return r.responseText;
+    }
+
     countSandUnits(input) {
         const map = this.load(input);
         let units = 0;
@@ -92,5 +107,4 @@ export class Day14Solution {
             }
         };
     }
-
 }
