@@ -21,6 +21,14 @@ export class Day14Solution {
         return units;
     }
 
+    countSandUnitsToBlock(input) {
+        const map = this.load(input);
+        map.createInfiniteFloor();
+        let units = 0;
+        while (map.addSandUnit()) { units++; }
+        return units + 1;
+    }
+
     load(input) {
         const map = this.createMap();
 
@@ -48,6 +56,7 @@ export class Day14Solution {
         let maxY = 0;
         let minX = 500;
         let maxX = 500;
+        let hasFloor = false;
 
         return {
             addWall(a, b) {
@@ -65,6 +74,9 @@ export class Day14Solution {
                     }
                 }
             },
+            createInfiniteFloor() {
+                hasFloor = true;
+            },
             visualize() {
                 this.set(500, 0, "+");
                 let result = ""
@@ -81,12 +93,13 @@ export class Day14Solution {
                 (map[y] || (map[y] = []))[x] = s;
             },
             get(x, y) {
-                return map[y]?.[x];
+                const isFloorCoordinate = y === (maxY + 2);
+                return hasFloor && isFloorCoordinate ? "#" : map[y]?.[x];
             },
             addSandUnit() {
                 let x = 500;
                 let y = 0;
-                const isPossible = () => minX <= x && x <= maxX && minY <= y && y <= maxY;
+                const isPossible = () => hasFloor || (minX <= x && x <= maxX && minY <= y && y <= maxY);
 
                 while (isPossible()) {
                     if (!this.get(x, y + 1)) {
@@ -99,7 +112,7 @@ export class Day14Solution {
                         x++;
                     } else {
                         this.set(x, y, "o");
-                        return true;
+                        return !(hasFloor && x === 500 && y === 0);
                     }
                 }
 
