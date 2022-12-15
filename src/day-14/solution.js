@@ -1,4 +1,11 @@
 export class Day14Solution {
+    countSandUnits(input) {
+        const map = this.load(input);
+        let units = 0;
+        while (map.addSandUnit()) { units++; }
+        return units;
+    }
+
     load(input) {
         const map = this.createMap();
 
@@ -49,7 +56,7 @@ export class Day14Solution {
                 for (let y = minY; y <= maxY; y++) {
                     let row = "";
                     for (let x = minX; x <= maxX; x++) {
-                        row += map[y]?.[x] || ".";
+                        row += this.get(x, y) || ".";
                     }
                     result += row + (y != maxY ? "\n" : "");
                 }
@@ -57,6 +64,31 @@ export class Day14Solution {
             },
             set(x, y, s) {
                 (map[y] || (map[y] = []))[x] = s;
+            },
+            get(x, y) {
+                return map[y]?.[x];
+            },
+            addSandUnit() {
+                let x = 500;
+                let y = 0;
+                const isPossible = () => minX <= x && x <= maxX && minY <= y && y <= maxY;
+
+                while (isPossible()) {
+                    if (!this.get(x, y + 1)) {
+                        y++;
+                    } else if (!this.get(x - 1, y + 1)) {
+                        y++;
+                        x--;
+                    } else if (!this.get(x + 1, y + 1)) {
+                        y++;
+                        x++;
+                    } else {
+                        this.set(x, y, "o");
+                        return true;
+                    }
+                }
+
+                return false;
             }
         };
     }
