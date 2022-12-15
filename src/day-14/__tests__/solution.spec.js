@@ -23,10 +23,12 @@ describe("day 13", () => {
         );
     });
 
-    test("count sand units", () => {
-        const input = `498,4 -> 498,6 -> 496,6
-                       503,4 -> 502,4 -> 502,9 -> 494,9`.replace(/\n +/g, "\n");
+    describe("part 1", () => {
+        test("count sand units", () => {
+            const input = `498,4 -> 498,6 -> 496,6
+            503,4 -> 502,4 -> 502,9 -> 494,9`.replace(/\n +/g, "\n");
 
-        expect(solution.countSandUnits(input)).toBe(24);
+            expect(solution.countSandUnits(input)).toBe(24);
+        });
     });
 });
