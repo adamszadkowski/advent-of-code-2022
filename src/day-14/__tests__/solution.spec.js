@@ -6,13 +6,15 @@ describe("day 13", () => {
 
         map.addWall({ x: 497, y: 4 }, { x: 504, y: 4 });
         map.addWall({ x: 497, y: 4 }, { x: 497, y: 2 });
+        map.addWall({ x: 497, y: 2 }, { x: 495, y: 2 });
+        map.addWall({ x: 495, y: 2 }, { x: 495, y: 3 });
 
         expect(map.visualize()).toEqual(
-            `...+....
-             ........
-             #.......
-             #.......
-             ########`.replace(/ +/g, ""),
+            `.....+....
+             ..........
+             ###.......
+             #.#.......
+             ..########`.replace(/ +/g, ""),
         );
     });
 });
@@ -31,12 +33,12 @@ function createMap() {
             maxY = Math.max(maxY, a.y, b.y);
 
             if (a.x !== b.x) {
-                for (let i = a.x; i <= b.x; i++) {
-                    this.set(i, a.y, "#");
+                for (let x = Math.min(a.x, b.x); x <= Math.max(a.x, b.x); x++) {
+                    this.set(x, a.y, "#");
                 }
             } else if (a.y != b.y) {
-                for (let i = b.y; i <= a.y; i++) {
-                    this.set(a.x, i, "#");
+                for (let y = Math.min(a.y, b.y); y <= Math.max(a.y, b.y); y++) {
+                    this.set(a.x, y, "#");
                 }
             }
         },
