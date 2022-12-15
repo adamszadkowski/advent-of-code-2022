@@ -7,6 +7,12 @@ export class Day14Solution {
         $("input[name=answer]").value = result;
     }
 
+    solvePart2() {
+        const input = this.httpGet("https://adventofcode.com/2022/day/14/input");
+        const result = this.countSandUnitsToBlock(input);
+        $("input[name=answer]").value = result;
+    }
+
     httpGet(url) {
         var r = new XMLHttpRequest();
         r.open("GET", url, false);
