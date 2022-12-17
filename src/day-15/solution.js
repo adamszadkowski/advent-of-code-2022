@@ -7,10 +7,18 @@ export class Day15Solution {
         const linePattern = /Sensor at x=(-?\d+), y=(-?\d+): closest beacon is at x=(-?\d+), y=(-?\d+)/;
         const map = this.createMap();
 
+        const point = (x, y) => ({
+            x: Number(x),
+            y: Number(y),
+            distance({ x, y }) {
+                return Math.abs(x - this.x) + Math.abs(y - this.y);
+            }
+        });
+
         input.split("\n")
             .map(l => {
                 const [, sx, sy, bx, by] = linePattern.exec(l);
-                return { sensor: { x: Number(sx), y: Number(sy) }, beacon: { x: Number(bx), y: Number(by) } };
+                return { sensor: point(sx, sy), beacon: point(bx, by) };
             })
             .forEach(({ sensor, beacon }) => map.addPair(sensor, beacon));
 
@@ -31,9 +39,8 @@ export class Day15Solution {
             addPair(sensor, beacon) {
                 this.add(sensor.x, sensor.y, "S");
                 this.add(beacon.x, beacon.y, "B");
-                const distance = (a, b) => Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
-                const maxDistance = distance(sensor, beacon);
-                const isInRange = (point) => distance(sensor, point) <= maxDistance;
+                const maxDistance = sensor.distance(beacon);
+                const isInRange = (point) => sensor.distance(point) <= maxDistance;
 
                 for (let y = sensor.y - maxDistance; y <= sensor.y + maxDistance; y++) {
                     for (let x = sensor.x - maxDistance; x <= sensor.x + maxDistance; x++) {
