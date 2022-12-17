@@ -4,10 +4,8 @@ describe("day 15", () => {
     test("create map", () => {
         const map = createMap();
 
-        map.add(2, 18, "S");
-        map.add(-2, 15, "B");
-        map.add(9, 16, "S");
-        map.add(10, 16, "B");
+        map.addPair({ x: 2, y: 18 }, { x: -2, y: 15 });
+        map.addPair({ x: 9, y: 16 }, { x: 10, y: 16 });
 
         expect(map.visualize()).toEqual(
             `B............
@@ -29,6 +27,10 @@ function createMap() {
     };
 
     return {
+        addPair(sensor, beacon) {
+            this.add(sensor.x, sensor.y, "S");
+            this.add(beacon.x, beacon.y, "B");
+        },
         add(x, y, type) {
             updateBoundaries(x, y);
             (map[y] || (map[y] = []))[x] = type;
