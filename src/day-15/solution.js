@@ -30,6 +30,7 @@ export class Day15Solution {
         });
 
         return input.split("\n")
+            .filter(l => l)
             .map(l => {
                 const [, sx, sy, bx, by] = linePattern.exec(l);
                 return { sensor: point(sx, sy), beacon: point(bx, by) };
