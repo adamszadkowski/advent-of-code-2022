@@ -4,10 +4,10 @@ describe("day 15", () => {
     test("create map", () => {
         const map = createMap();
 
-        map.addSensor(2, 18);
-        map.addBeacon(-2, 15);
-        map.addSensor(9, 16);
-        map.addBeacon(10, 16);
+        map.add(2, 18, "S");
+        map.add(-2, 15, "B");
+        map.add(9, 16, "S");
+        map.add(10, 16, "B");
 
         expect(map.visualize()).toEqual(
             `B............
@@ -29,13 +29,9 @@ function createMap() {
     };
 
     return {
-        addSensor(x, y) {
+        add(x, y, type) {
             updateBoundaries(x, y);
-            (map[y] || (map[y] = []))[x] = "S";
-        },
-        addBeacon(x, y) {
-            updateBoundaries(x, y);
-            (map[y] || (map[y] = []))[x] = "B";
+            (map[y] || (map[y] = []))[x] = type;
         },
         visualize() {
             let result = "";
