@@ -54,17 +54,6 @@ export class Day15Solution {
                 updateBoundaries(x, y);
                 this.set(x, y, type);
             },
-            visualize() {
-                let result = "";
-                for (let y = min.y; y <= max.y; y++) {
-                    let row = "";
-                    for (let x = min.x; x <= max.x; x++) {
-                        row += this.get(x, y) || ".";
-                    }
-                    result += row + (y != max.y ? "\n" : "");
-                }
-                return result;
-            },
             set(x, y, type) {
                 (map[y] || (map[y] = []))[x] = type;
             },
