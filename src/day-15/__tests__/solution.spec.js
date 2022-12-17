@@ -30,11 +30,19 @@ describe("day 15", () => {
 
     [
         { before: ["0:1"], after: ["0:1"] },
+        { before: ["0:1", "1:2"], after: ["0:2"] },
+        { before: ["0:3", "1:2"], after: ["0:3"] },
+        { before: ["0:1", "3:4"], after: ["0:1", "3:4"] },
+        { before: ["0:1", "2:3", "3:4"], after: ["0:1", "2:4"] },
+        { before: ["0:1", "3:5", "5:6"], after: ["0:1", "3:6"] },
+        { before: ["0:1", "3:4", "5:6"], after: ["0:1", "3:4", "5:6"] },
+        { before: ["2:3", "0:2"], after: ["0:3"] },
+        { before: ["0:2", "-1:5"], after: ["-1:5"] },
     ].forEach(({ before, after }) => {
         test(`join ranges ${before} to ${after}`, () => {
             const range = (r) => {
                 const [from, to] = r.split(":");
-                return { rangeFrom: from, rangeTo: to };
+                return { rangeFrom: Number(from), rangeTo: Number(to) };
             }
             const ranges = before.map(r => range(r));
 

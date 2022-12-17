@@ -43,6 +43,19 @@ export class Day15Solution {
     }
 
     mergeRanges(ranges) {
-        return ranges;
+        const [firstRange, ...sortedRanges] = ranges.sort((a, b) => a.rangeFrom - b.rangeFrom);
+
+        const result = [firstRange];
+
+        for (const current of sortedRanges) {
+            const last = result.at(-1);
+            if (last.rangeTo < current.rangeFrom) {
+                result.push(current);
+            } else if (last.rangeTo < current.rangeTo) {
+                last.rangeTo = current.rangeTo;
+            }
+        }
+
+        return result;
     }
 }
