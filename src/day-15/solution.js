@@ -1,7 +1,9 @@
 export class Day15Solution {
-    countNotBeacon(input) {
-        const desiredRow = 10;
+    constructor(desiredRow) {
+        this.desiredRow = desiredRow;
+    }
 
+    countNotBeacon(input) {
         const range = (from, to) => ({
             rangeFrom: from,
             rangeTo: to,
@@ -11,7 +13,7 @@ export class Day15Solution {
         const ranges = this.load(input)
             .map(({ sensor, beacon }) => {
                 const fullDistance = sensor.distance(beacon);
-                const verticalDistance = Math.abs(sensor.y - desiredRow);
+                const verticalDistance = Math.abs(sensor.y - this.desiredRow);
                 const horizontalDistance = fullDistance - verticalDistance;
 
                 return range(sensor.x - horizontalDistance, sensor.x + horizontalDistance);

@@ -5,7 +5,7 @@ describe("day 15", () => {
     let solution;
 
     beforeEach(() => {
-        solution = new Day15Solution();
+        solution = new Day15Solution(10);
     });
 
     test("count positions that cannot contain beacon", () => {
