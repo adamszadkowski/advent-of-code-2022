@@ -8,19 +8,19 @@ export class Day15Solution {
             distance() { return Math.abs(this.rangeFrom - this.rangeTo); }
         });
 
-        return this.load(input)
+        const ranges = this.load(input)
             .map(({ sensor, beacon }) => {
                 const fullDistance = sensor.distance(beacon);
                 const verticalDistance = Math.abs(sensor.y - desiredRow);
                 const horizontalDistance = fullDistance - verticalDistance;
 
                 return range(sensor.x - horizontalDistance, sensor.x + horizontalDistance);
-            })
-            .reduce((acc, { rangeFrom, rangeTo }) => range(
-                Math.min(acc?.rangeFrom ?? rangeFrom, rangeFrom),
-                Math.max(acc?.rangeTo ?? rangeTo, rangeTo),
-            ))
-            .distance();
+            });
+
+        return this.mergeRanges(ranges)
+            .map(r => r.distance())
+            .filter(d => d > 0)
+            .reduce((acc, d) => acc + d, 0);
     }
 
     load(input) {
