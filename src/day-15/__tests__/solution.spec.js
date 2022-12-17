@@ -8,11 +8,11 @@ describe("day 15", () => {
         map.addPair({ x: 9, y: 16 }, { x: 10, y: 16 });
 
         expect(map.visualize()).toEqual(
-            `B............
-             ...........SB
-             .............
-             ....S........`.replace(/ +/g, "")
-        )
+            `B########..#.
+             ###########SB
+             ############.
+             ####S#######.`.replace(/ +/g, "")
+        );
     });
 });
 
@@ -30,6 +30,16 @@ function createMap() {
         addPair(sensor, beacon) {
             this.add(sensor.x, sensor.y, "S");
             this.add(beacon.x, beacon.y, "B");
+            const distance = (a, b) => Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
+            const maxDistance = distance(sensor, beacon);
+            const isInRange = (point) => distance(sensor, point) <= maxDistance;
+            for (let y = sensor.y - maxDistance; y <= sensor.y + maxDistance; y++) {
+                for (let x = sensor.x - maxDistance; x <= sensor.x + maxDistance; x++) {
+                    if (!map[y]?.[x] && isInRange({ x, y })) {
+                        (map[y] || (map[y] = []))[x] = "#";
+                    }
+                }
+            }
         },
         add(x, y, type) {
             updateBoundaries(x, y);
