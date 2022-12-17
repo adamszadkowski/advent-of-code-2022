@@ -5,12 +5,15 @@ describe("day 15", () => {
         const map = createMap();
 
         map.addSensor(2, 18);
+        map.addBeacon(-2, 15);
         map.addSensor(9, 16);
+        map.addBeacon(10, 16);
 
         expect(map.visualize()).toEqual(
-            `.......S
-             ........
-             S.......`.replace(/ +/g, "")
+            `B............
+             ...........SB
+             .............
+             ....S........`.replace(/ +/g, "")
         )
     });
 });
@@ -29,6 +32,10 @@ function createMap() {
         addSensor(x, y) {
             updateBoundaries(x, y);
             (map[y] || (map[y] = []))[x] = "S";
+        },
+        addBeacon(x, y) {
+            updateBoundaries(x, y);
+            (map[y] || (map[y] = []))[x] = "B";
         },
         visualize() {
             let result = "";
