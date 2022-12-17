@@ -1,4 +1,8 @@
 export class Day15Solution {
+    countNotBeacon(input) {
+        return this.load(input).getRow(10).filter(e => e === "#").length
+    }
+
     load(input) {
         const linePattern = /Sensor at x=(-?\d+), y=(-?\d+): closest beacon is at x=(-?\d+), y=(-?\d+)/;
         const map = this.createMap();
@@ -59,6 +63,9 @@ export class Day15Solution {
             },
             get(x, y) {
                 return map[y]?.[x];
+            },
+            getRow(y) {
+                return Object.values(map[y]);
             }
         };
     }
