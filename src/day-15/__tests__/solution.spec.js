@@ -27,4 +27,18 @@ describe("day 15", () => {
 
         expect(solution.countNotBeacon(input)).toBe(26);
     });
+
+    [
+        { before: ["0:1"], after: ["0:1"] },
+    ].forEach(({ before, after }) => {
+        test(`join ranges ${before} to ${after}`, () => {
+            const range = (r) => {
+                const [from, to] = r.split(":");
+                return { rangeFrom: from, rangeTo: to };
+            }
+            const ranges = before.map(r => range(r));
+
+            expect(solution.mergeRanges(ranges)).toEqual(after.map(r => range(r)));
+        });
+    });
 });

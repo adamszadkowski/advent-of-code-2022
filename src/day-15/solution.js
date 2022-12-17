@@ -41,4 +41,8 @@ export class Day15Solution {
                 return { sensor: point(sx, sy), beacon: point(bx, by) };
             })
     }
+
+    mergeRanges(ranges) {
+        return ranges;
+    }
 }
