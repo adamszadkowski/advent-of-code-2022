@@ -2,20 +2,25 @@ export class Day15Solution {
     countNotBeacon(input) {
         const desiredRow = 10;
 
-        const range = this.load(input)
+        const range = (from, to) => ({
+            rangeFrom: from,
+            rangeTo: to,
+            distance() { return Math.abs(this.rangeFrom - this.rangeTo); }
+        });
+
+        return this.load(input)
             .map(({ sensor, beacon }) => {
                 const fullDistance = sensor.distance(beacon);
                 const verticalDistance = Math.abs(sensor.y - desiredRow);
                 const horizontalDistance = fullDistance - verticalDistance;
 
-                return { rangeFrom: sensor.x - horizontalDistance, rangeTo: sensor.x + horizontalDistance };
+                return range(sensor.x - horizontalDistance, sensor.x + horizontalDistance);
             })
-            .reduce((acc, { rangeFrom, rangeTo }) => ({
-                rangeFrom: Math.min(acc?.rangeFrom ?? rangeFrom, rangeFrom),
-                rangeTo: Math.max(acc?.rangeTo ?? rangeTo, rangeTo),
-            }));
-
-        return Math.abs(range.rangeFrom - range.rangeTo);
+            .reduce((acc, { rangeFrom, rangeTo }) => range(
+                Math.min(acc?.rangeFrom ?? rangeFrom, rangeFrom),
+                Math.max(acc?.rangeTo ?? rangeTo, rangeTo),
+            ))
+            .distance();
     }
 
     load(input) {
