@@ -1,6 +1,21 @@
+function $() { }
+
 export class Day15Solution {
     constructor(desiredRow) {
         this.desiredRow = desiredRow;
+    }
+
+    solve() {
+        const input = this.httpGet("https://adventofcode.com/2022/day/15/input");
+        const result = this.countNotBeacon(input);
+        $("input[name=answer]").value = result;
+    }
+
+    httpGet(url) {
+        var r = new XMLHttpRequest();
+        r.open("GET", url, false);
+        r.send(null);
+        return r.responseText;
     }
 
     countNotBeacon(input) {
