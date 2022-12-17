@@ -33,28 +33,35 @@ function createMap() {
             const distance = (a, b) => Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
             const maxDistance = distance(sensor, beacon);
             const isInRange = (point) => distance(sensor, point) <= maxDistance;
+
             for (let y = sensor.y - maxDistance; y <= sensor.y + maxDistance; y++) {
                 for (let x = sensor.x - maxDistance; x <= sensor.x + maxDistance; x++) {
-                    if (!map[y]?.[x] && isInRange({ x, y })) {
-                        (map[y] || (map[y] = []))[x] = "#";
+                    if (!this.get(x, y) && isInRange({ x, y })) {
+                        this.set(x, y, "#");
                     }
                 }
             }
         },
         add(x, y, type) {
             updateBoundaries(x, y);
-            (map[y] || (map[y] = []))[x] = type;
+            this.set(x, y, type);
         },
         visualize() {
             let result = "";
             for (let y = min.y; y <= max.y; y++) {
                 let row = "";
                 for (let x = min.x; x <= max.x; x++) {
-                    row += map[y]?.[x] || ".";
+                    row += this.get(x, y) || ".";
                 }
                 result += row + (y != max.y ? "\n" : "");
             }
             return result;
         },
+        set(x, y, type) {
+            (map[y] || (map[y] = []))[x] = type;
+        },
+        get(x, y) {
+            return map[y]?.[x];
+        }
     };
 }
