@@ -2,10 +2,10 @@ import { describe, expect, test } from "@jest/globals";
 
 describe("day 15", () => {
     test("create map", () => {
-        const map = createMap();
+        const input = `Sensor at x=2, y=18: closest beacon is at x=-2, y=15
+                       Sensor at x=9, y=16: closest beacon is at x=10, y=16`.replace(/\n +/g, "\n");
 
-        map.addPair({ x: 2, y: 18 }, { x: -2, y: 15 });
-        map.addPair({ x: 9, y: 16 }, { x: 10, y: 16 });
+        const map = load(input);
 
         expect(map.visualize()).toEqual(
             `B########..#.
@@ -15,6 +15,20 @@ describe("day 15", () => {
         );
     });
 });
+
+function load(input) {
+    const linePattern = /Sensor at x=(-?\d+), y=(-?\d+): closest beacon is at x=(-?\d+), y=(-?\d+)/;
+    const map = createMap();
+
+    input.split("\n")
+        .map(l => {
+            const [, sx, sy, bx, by] = linePattern.exec(l);
+            return { sensor: { x: Number(sx), y: Number(sy) }, beacon: { x: Number(bx), y: Number(by) } };
+        })
+        .forEach(({ sensor, beacon }) => map.addPair(sensor, beacon));
+
+    return map;
+}
 
 function createMap() {
     const map = [];
