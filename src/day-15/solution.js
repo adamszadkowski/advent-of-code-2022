@@ -16,12 +16,15 @@ export class Day15Solution {
                 const verticalDistance = Math.abs(sensor.y - this.desiredRow);
                 const horizontalDistance = fullDistance - verticalDistance;
 
-                return range(sensor.x - horizontalDistance, sensor.x + horizontalDistance);
-            });
+                if (sensor.x - horizontalDistance <= sensor.x + horizontalDistance)
+                    return range(sensor.x - horizontalDistance, sensor.x + horizontalDistance);
+                else
+                    return null
+            })
+            .filter(r => r);
 
         return this.mergeRanges(ranges)
             .map(r => r.distance())
-            .filter(d => d > 0)
             .reduce((acc, d) => acc + d, 0);
     }
 
