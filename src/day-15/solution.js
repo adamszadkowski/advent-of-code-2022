@@ -74,7 +74,7 @@ export class Day15Solution {
             .filter(l => l)
             .map(l => {
                 const [, sx, sy, bx, by] = linePattern.exec(l);
-                return { sensor: this.point(sx, sy), beacon: this.point(bx, by) };
+                return { sensor: new Point(sx, sy), beacon: new Point(bx, by) };
             })
     }
 
@@ -102,32 +102,33 @@ export class Day15Solution {
         while (y < sensor.y) {
             x += 1;
             y += 1;
-            yield this.point(x, y);
+            yield new Point(x, y);
         }
         while (x > sensor.x) {
             x -= 1;
             y += 1;
-            yield this.point(x, y);
+            yield new Point(x, y);
         }
         while (y > sensor.y) {
             x -= 1;
             y -= 1;
-            yield this.point(x, y);
+            yield new Point(x, y);
         }
         while (x < sensor.x) {
             x += 1;
             y -= 1;
-            yield this.point(x, y);
+            yield new Point(x, y);
         }
     }
+}
 
-    point(x, y) {
-        return {
-            x: Number(x),
-            y: Number(y),
-            distance({ x, y }) {
-                return Math.abs(x - this.x) + Math.abs(y - this.y);
-            }
-        };
+class Point {
+    constructor(x, y) {
+        this.x = Number(x);
+        this.y = Number(y);
+    }
+
+    distance(other) {
+        return Math.abs(other.x - this.x) + Math.abs(other.y - this.y);
     }
 }
