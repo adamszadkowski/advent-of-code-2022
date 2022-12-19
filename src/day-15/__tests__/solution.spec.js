@@ -62,19 +62,23 @@ describe("day 15", () => {
 
             const border = solution.generateBorder({ sensor: point(10, 10), beacon: point(12, 10) });
 
-            expect(border.next().value).toMatchObject({ x: 10, y: 7 });
-            expect(border.next().value).toMatchObject({ x: 11, y: 8 });
-            expect(border.next().value).toMatchObject({ x: 12, y: 9 });
-            expect(border.next().value).toMatchObject({ x: 13, y: 10 });
-            expect(border.next().value).toMatchObject({ x: 12, y: 11 });
-            expect(border.next().value).toMatchObject({ x: 11, y: 12 });
-            expect(border.next().value).toMatchObject({ x: 10, y: 13 });
-            expect(border.next().value).toMatchObject({ x: 9, y: 12 });
-            expect(border.next().value).toMatchObject({ x: 8, y: 11 });
-            expect(border.next().value).toMatchObject({ x: 7, y: 10 });
-            expect(border.next().value).toMatchObject({ x: 8, y: 9 });
-            expect(border.next().value).toMatchObject({ x: 9, y: 8 });
-            expect(border.next().value).toMatchObject({ x: 10, y: 7 });
+            expect(Array.from(border).map(({ x, y }) => ({ x, y }))).toMatchObject(
+                expect.arrayContaining([
+                    { x: 10, y: 7 },
+                    { x: 11, y: 8 },
+                    { x: 12, y: 9 },
+                    { x: 13, y: 10 },
+                    { x: 12, y: 11 },
+                    { x: 11, y: 12 },
+                    { x: 10, y: 13 },
+                    { x: 9, y: 12 },
+                    { x: 8, y: 11 },
+                    { x: 7, y: 10 },
+                    { x: 8, y: 9 },
+                    { x: 9, y: 8 },
+                    { x: 10, y: 7 },
+                ])
+            )
         });
     });
 });
