@@ -1,8 +1,9 @@
 function $() { }
 
 export class Day15Solution {
-    constructor(desiredRow) {
+    constructor(desiredRow, searchArea) {
         this.desiredRow = desiredRow;
+        this.searchArea = searchArea;
     }
 
     solve() {
@@ -16,6 +17,29 @@ export class Day15Solution {
         r.open("GET", url, false);
         r.send(null);
         return r.responseText;
+    }
+
+    findNearbyBeaconTuningFrequency(input) {
+        const sensors = this.load(input);
+
+        const { x, y } = sensors
+            .map(p => this.generateBorder(p))
+            .map(g => {
+                for (const b of g) {
+                    if (b.x >= 0 && b.y >= 0 && b.x <= this.searchArea && b.y <= this.searchArea) {
+                        const found = sensors.every(({ sensor, beacon }) => {
+                            const minimumDistance = sensor.distance(beacon);
+                            const candidateDistance = sensor.distance(b);
+                            return minimumDistance < candidateDistance;
+                        });
+                        if (found) return b;
+                    }
+                }
+                return null;
+            })
+            .find((b) => b);
+
+        return x * 4000000 + y;
     }
 
     countNotBeacon(input) {
