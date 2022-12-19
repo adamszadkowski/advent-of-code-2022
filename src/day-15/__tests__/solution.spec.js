@@ -72,6 +72,9 @@ describe("day 15", () => {
             expect(border.next().value).toMatchObject({ x: 9, y: 12 });
             expect(border.next().value).toMatchObject({ x: 8, y: 11 });
             expect(border.next().value).toMatchObject({ x: 7, y: 10 });
+            expect(border.next().value).toMatchObject({ x: 8, y: 9 });
+            expect(border.next().value).toMatchObject({ x: 9, y: 8 });
+            expect(border.next().value).toMatchObject({ x: 10, y: 7 });
         });
     });
 });

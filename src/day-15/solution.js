@@ -90,6 +90,11 @@ export class Day15Solution {
             y -= 1;
             yield this.point(x, y);
         }
+        while (x < sensor.x) {
+            x += 1;
+            y -= 1;
+            yield this.point(x, y);
+        }
     }
 
     point(x, y) {
