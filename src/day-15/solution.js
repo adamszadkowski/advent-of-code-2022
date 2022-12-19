@@ -22,24 +22,19 @@ export class Day15Solution {
     findNearbyBeaconTuningFrequency(input) {
         const sensors = this.load(input);
 
-        const { x, y } = sensors
-            .map(p => this.generateBorder(p))
-            .map(g => {
-                for (const b of g) {
-                    if (b.x >= 0 && b.y >= 0 && b.x <= this.searchArea && b.y <= this.searchArea) {
-                        const found = sensors.every((sensor) => {
-                            const minimumDistance = sensor.distance;
-                            const candidateDistance = sensor.location.distance(b);
-                            return minimumDistance < candidateDistance;
-                        });
-                        if (found) return b;
-                    }
-                }
-                return null;
-            })
-            .find((b) => b);
+        for (const s of sensors) {
+            const borders = this.generateBorder(s);
+            for (const b of borders) {
+                const found = sensors.every((sensor) => {
+                    const minimumDistance = sensor.distance;
+                    const candidateDistance = sensor.location.distance(b);
+                    return minimumDistance < candidateDistance;
+                });
+                if (found) return b.x * 4000000 + b.y;
+            }
+        }
 
-        return x * 4000000 + y;
+        return null;
     }
 
     countNotBeacon(input) {
@@ -99,25 +94,26 @@ export class Day15Solution {
         const distance = sensor.distance + 1;
         let x = sensor.x - 1;
         let y = sensor.y - distance - 1;
+        const isValid = () => (x >= 0 && y >= 0 && x <= this.searchArea && y <= this.searchArea);
         while (y < sensor.y) {
             x += 1;
             y += 1;
-            yield new Point(x, y);
+            if (isValid()) yield new Point(x, y);
         }
         while (x > sensor.x) {
             x -= 1;
             y += 1;
-            yield new Point(x, y);
+            if (isValid()) yield new Point(x, y);
         }
         while (y > sensor.y) {
             x -= 1;
             y -= 1;
-            yield new Point(x, y);
+            if (isValid()) yield new Point(x, y);
         }
         while (x < sensor.x) {
             x += 1;
             y -= 1;
-            yield new Point(x, y);
+            if (isValid()) yield new Point(x, y);
         }
     }
 }
