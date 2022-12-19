@@ -27,9 +27,9 @@ export class Day15Solution {
             .map(g => {
                 for (const b of g) {
                     if (b.x >= 0 && b.y >= 0 && b.x <= this.searchArea && b.y <= this.searchArea) {
-                        const found = sensors.every(({ sensor, beacon }) => {
-                            const minimumDistance = sensor.distance(beacon);
-                            const candidateDistance = sensor.distance(b);
+                        const found = sensors.every((sensor) => {
+                            const minimumDistance = sensor.distance;
+                            const candidateDistance = sensor.location.distance(b);
                             return minimumDistance < candidateDistance;
                         });
                         if (found) return b;
@@ -50,8 +50,8 @@ export class Day15Solution {
         });
 
         const ranges = this.load(input)
-            .map(({ sensor, beacon }) => {
-                const fullDistance = sensor.distance(beacon);
+            .map((sensor) => {
+                const fullDistance = sensor.distance;
                 const verticalDistance = Math.abs(sensor.y - this.desiredRow);
                 const horizontalDistance = fullDistance - verticalDistance;
 
@@ -74,7 +74,7 @@ export class Day15Solution {
             .filter(l => l)
             .map(l => {
                 const [, sx, sy, bx, by] = linePattern.exec(l);
-                return { sensor: new Point(sx, sy), beacon: new Point(bx, by) };
+                return new Sensor(new Point(sx, sy), new Point(bx, by));
             })
     }
 
@@ -95,8 +95,8 @@ export class Day15Solution {
         return result;
     }
 
-    * generateBorder({ sensor, beacon }) {
-        const distance = sensor.distance(beacon) + 1;
+    * generateBorder(sensor) {
+        const distance = sensor.distance + 1;
         let x = sensor.x - 1;
         let y = sensor.y - distance - 1;
         while (y < sensor.y) {
@@ -119,6 +119,16 @@ export class Day15Solution {
             y -= 1;
             yield new Point(x, y);
         }
+    }
+}
+
+class Sensor {
+    constructor(sensor, beacon) {
+        this.x = sensor.x;
+        this.y = sensor.y;
+        this.location = sensor;
+        this.beacon = beacon;
+        this.distance = sensor.distance(beacon);
     }
 }
 

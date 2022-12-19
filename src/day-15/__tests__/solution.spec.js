@@ -52,15 +52,7 @@ describe("day 15", () => {
 
     describe("part 2", () => {
         test("traverse outside points", () => {
-            const point = (x, y) => ({
-                x: Number(x),
-                y: Number(y),
-                distance({ x, y }) {
-                    return Math.abs(x - this.x) + Math.abs(y - this.y);
-                }
-            });
-
-            const border = solution.generateBorder({ sensor: point(10, 10), beacon: point(12, 10) });
+            const border = solution.generateBorder({ x: 10, y: 10, distance: 2 });
 
             expect(Array.from(border).map(({ x, y }) => ({ x, y }))).toMatchObject(
                 expect.arrayContaining([
