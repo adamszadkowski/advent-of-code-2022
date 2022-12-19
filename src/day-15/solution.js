@@ -73,13 +73,18 @@ export class Day15Solution {
 
     * generateBorder({ sensor, beacon }) {
         const distance = sensor.distance(beacon) + 1;
-        let x = sensor.x;
-        let y = sensor.y - distance;
-        do {
-            yield this.point(x, y);
+        let x = sensor.x - 1;
+        let y = sensor.y - distance - 1;
+        while (y < sensor.y) {
             x += 1;
             y += 1;
-        } while(y <= sensor.y);
+            yield this.point(x, y);
+        }
+        while (x > sensor.x) {
+            x -= 1;
+            y += 1;
+            yield this.point(x, y);
+        }
     }
 
     point(x, y) {
