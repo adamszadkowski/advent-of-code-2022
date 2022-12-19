@@ -46,19 +46,11 @@ export class Day15Solution {
     load(input) {
         const linePattern = /Sensor at x=(-?\d+), y=(-?\d+): closest beacon is at x=(-?\d+), y=(-?\d+)/;
 
-        const point = (x, y) => ({
-            x: Number(x),
-            y: Number(y),
-            distance({ x, y }) {
-                return Math.abs(x - this.x) + Math.abs(y - this.y);
-            }
-        });
-
         return input.split("\n")
             .filter(l => l)
             .map(l => {
                 const [, sx, sy, bx, by] = linePattern.exec(l);
-                return { sensor: point(sx, sy), beacon: point(bx, by) };
+                return { sensor: this.point(sx, sy), beacon: this.point(bx, by) };
             })
     }
 
@@ -77,5 +69,22 @@ export class Day15Solution {
         }
 
         return result;
+    }
+
+    * generateBorder({ sensor, beacon }) {
+        const distance = sensor.distance(beacon) + 1;
+        let x = sensor.x;
+        let y = sensor.y - distance;
+        yield this.point(x, y);
+    }
+
+    point(x, y) {
+        return {
+            x: Number(x),
+            y: Number(y),
+            distance({ x, y }) {
+                return Math.abs(x - this.x) + Math.abs(y - this.y);
+            }
+        };
     }
 }

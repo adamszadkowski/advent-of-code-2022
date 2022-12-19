@@ -49,4 +49,20 @@ describe("day 15", () => {
             expect(solution.mergeRanges(ranges)).toEqual(after.map(r => range(r)));
         });
     });
+
+    describe("part 2", () => {
+        test("traverse outside points", () => {
+            const point = (x, y) => ({
+                x: Number(x),
+                y: Number(y),
+                distance({ x, y }) {
+                    return Math.abs(x - this.x) + Math.abs(y - this.y);
+                }
+            });
+
+            const border = solution.generateBorder({ sensor: point(10, 10), beacon: point(12, 10) });
+
+            expect(border.next().value).toMatchObject({ x: 10, y: 7 });
+        });
+    });
 });
