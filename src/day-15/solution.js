@@ -75,7 +75,11 @@ export class Day15Solution {
         const distance = sensor.distance(beacon) + 1;
         let x = sensor.x;
         let y = sensor.y - distance;
-        yield this.point(x, y);
+        do {
+            yield this.point(x, y);
+            x += 1;
+            y += 1;
+        } while(y <= sensor.y);
     }
 
     point(x, y) {
